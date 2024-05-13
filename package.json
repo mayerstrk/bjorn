@@ -16,8 +16,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.28.1",
-    "@skeletonlabs/skeleton": "^2.9.2",
-    "@skeletonlabs/tw-plugin": "^0.4.0",
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
@@ -36,8 +34,12 @@
     "tailwindcss": "^3.4.3",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
+    "typescript-svelte-plugin": "^0.3.38",
     "vite": "^5.0.3",
     "vitest": "^1.2.0"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@sveltejs/adapter-vercel": "^5.3.0"
+  }
 }

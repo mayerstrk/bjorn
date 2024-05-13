@@ -1,22 +1,15 @@
-import { join } from 'path';
 import type { Config } from 'tailwindcss';
 
-import { skeleton } from '@skeletonlabs/tw-plugin';
-
 const config = {
-	darkMode: 'class',
-	content: [
-		'./src/**/*.{html,js,svelte,ts}',
-		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
-	],
+	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {}
+		extend: {
+			fontFamily: {
+				'jetbrains-mono': ['JetBrainsMono', 'monospace']
+			}
+		}
 	},
-	plugins: [
-		skeleton({
-			themes: { preset: [{ name: 'rocket', enhancements: true }] }
-		})
-	]
+	plugins: []
 } satisfies Config;
 
 export default config;

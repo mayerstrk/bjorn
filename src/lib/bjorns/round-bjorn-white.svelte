@@ -6,14 +6,14 @@
 	x="0px"
 	y="0px"
 	width="40px"
-	height="40px"
 	viewBox="0 0 200 200"
 	style="enable-background:new 0 0 200 200;"
 	xml:space="preserve"
+	fill="#fff"
 >
 	<style type="text/css">
 		.st0 {
-			fill: #ffffff;
+			fill: 'red';
 		}
 	</style>
 	<g>

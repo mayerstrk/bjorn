@@ -1,21 +1,23 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 	import Logo from '../lib/components/logo.svelte';
 	import Controls from '../lib/components/nav-controls.svelte';
+	import Spotlight from '../lib/components/spotlight.svelte';
+
+	let clientWidth = $state(0);
 </script>
 
-<page id="root-layout-page" class="border-red-900 flex flex-col">
+<Spotlight />
+<page id="root-layout-page" class="flex flex-col" bind:clientWidth>
 	<nav
 		id="root-layout-nav"
-		class="bg-surface-900 w-full p-2 justify-between flex"
+		class="fixed top-0 backdrop-blur-md left-0 right-0 p-5 justify-between flex"
 	>
-		<Logo />
+		<Logo {clientWidth} />
 		<Controls />
 	</nav>
-	<main
-		id="root-layout-main"
-		class="border-blue-900 border-4 w-full h-svh flex"
-	>
+	<!-- svelte-ignore deprecated_slot_element -->
+	<main id="root-layout-main" class=" w-full h-svh flex">
 		<slot />
 	</main>
 	<footer>
