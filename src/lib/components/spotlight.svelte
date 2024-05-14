@@ -1,9 +1,8 @@
-<script>
+<script lang="ts">
 	let x = 0;
 	let y = 0;
 
-	// Update mouse position
-	function updatePosition(event) {
+	function updatePosition(event: MouseEvent) {
 		x = event.clientX;
 		y = event.clientY;
 	}
@@ -13,7 +12,7 @@
 
 <div
 	class="spotlight"
-	style="background-image: radial-gradient(circle at {x}px {y}px, transparent, rgba(0, 0, 0, 0.9) 70%);"
+	style="background-image: radial-gradient(circle at {x}px {y}px, transparent, rgba(0, 0, 0, 1) 90%);"
 ></div>
 
 <style>
@@ -21,9 +20,10 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 100vw;
-		height: 100vh;
+		width: 100%;
+		height: 100%;
 		pointer-events: none;
 		backdrop-filter: blur(10px);
+		z-index: -1;
 	}
 </style>

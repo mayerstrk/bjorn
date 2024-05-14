@@ -4,23 +4,25 @@
 	import Controls from '../lib/components/nav-controls.svelte';
 	import Spotlight from '../lib/components/spotlight.svelte';
 
-	let clientWidth = $state(0);
+	let clientWidth;
 </script>
 
 <Spotlight />
-<page id="root-layout-page" class="flex flex-col" bind:clientWidth>
-	<nav
-		id="root-layout-nav"
-		class="fixed top-0 backdrop-blur-md left-0 right-0 p-5 justify-between flex"
-	>
+<page
+	id="root-layout-page"
+	class="flex flex-col h-full max-w-screen-xl min-w-[320px] w-full mx-auto"
+	bind:clientWidth
+>
+	<nav id="root-layout-nav" class=" backdrop-blur-md p-5 justify-between flex">
 		<Logo {clientWidth} />
 		<Controls />
 	</nav>
-	<!-- svelte-ignore deprecated_slot_element -->
-	<main id="root-layout-main" class=" w-full h-svh flex">
+	<main id="root-layout-main" class="w-full flex grow">
 		<slot />
 	</main>
-	<footer>
-		<p class="text-xs">&copy; 2024 Mayer Starkman</p>
+	<footer class="flex grow-0">
+		<p class="text-xs md:text-sm text-gray-500 m-auto">
+			&copy; 2024 Mayer Starkman. All rights reserved.
+		</p>
 	</footer>
 </page>
