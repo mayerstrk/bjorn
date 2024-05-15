@@ -10,20 +10,17 @@
 <Spotlight />
 <page
 	id="root-layout-page"
-	class="relative flex flex-col h-full max-w-screen-xl min-w-[320px] w-full mx-auto"
+	class="flex flex-col h-full overflow-y-auto max-w-screen-xl min-w-[320px] w-full mx-auto"
 	bind:clientWidth
 >
 	<nav
 		id="root-layout-nav"
-		class="sticky top-0 backdrop-blur-md p-5 flex justify-between w-full z-10"
+		class="sticky top-0 inset-x-0 backdrop-blur-sm p-5 justify-between w-full flex"
 	>
 		<Logo {clientWidth} />
 		<Controls />
 	</nav>
-	<main
-		id="root-layout-main"
-		class="w-full px-20 overflow-y-auto flex flex-col grow"
-	>
+	<main id="root-layout-main" class="w-full px-20 flex flex-col grow">
 		<slot />
 	</main>
 	<footer class="flex grow-0">
