@@ -2,14 +2,42 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<title>Mayer Starkman | Developer Portfolio</title>
+		<meta
+			name="description"
+			content="Developer portfolio of Mayer Starkman (mstarkcode / mayerstrk), showcasing projects, skills, and experiences."
+		/>
+		<meta name="author" content="Mayer Starkman" />
+
+		<!-- Open Graph Meta Tags -->
+		<meta property="og:title" content="Mayer Starkman | Developer Portfolio" />
+		<meta
+			property="og:description"
+			content="Developer portfolio of Mayer Starkman (mstarkcode / mayerstrk), showcasing projects, skills, and experiences."
+		/>
+		<meta property="og:image" content="%sveltekit.assets%/thumbnail.png" />
+		<meta property="og:url" content="https://mstarkcode.dev" />
+		<meta property="og:type" content="website" />
+
+		<!-- Additional SEO Meta Tags -->
+		<meta
+			name="keywords"
+			content="Mayer Starkman, mstarkcode, mayerstrk, developer portfolio, web development, software engineer, front-end developer, back-end developer, full-stack developer"
+		/>
+		<meta name="robots" content="index, follow" />
+
+		<!-- Favicon -->
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+
+		<!-- Viewport Meta Tag for Responsive Design -->
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
 		%sveltekit.head%
 	</head>
 	<body
 		role="document"
 		data-sveltekit-preload-data="hover"
-		class="bg-[#151d26] min-w-[320px] h-svh flex flex-col"
+		class="bg-[#151d26] text-white min-w-[320px] h-svh flex flex-col"
 	>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
