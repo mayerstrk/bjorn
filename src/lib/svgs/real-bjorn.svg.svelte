@@ -1,8 +1,3 @@
-<script>
-	export let width = '40px';
-	console.log(width);
-</script>
-
 <svg
 	version="1.1"
 	id="Layer_1"
@@ -12,7 +7,7 @@
 	y="0px"
 	viewBox="0 0 200 200"
 	style="enable-background:new 0 0 200 200;"
-	{width}
+	class="w-[40px] md:w-[80px]"
 	xml:space="preserve"
 	fill="white"
 	stroke="white"

@@ -1,7 +1,3 @@
-<script>
-	export let width = '120px';
-</script>
-
 <svg
 	version="1.1"
 	id="Layer_1"
@@ -9,7 +5,7 @@
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	x="0px"
 	y="0px"
-	{width}
+	class="w-[100px] md:w-[200px]"
 	viewBox="0 0 585 150"
 	enable-background="new 0 0 585 150"
 	xml:space="preserve"

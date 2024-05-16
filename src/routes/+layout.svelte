@@ -3,24 +3,21 @@
 	import Logo from '../lib/components/logo.svelte';
 	import Controls from '../lib/components/nav-controls.svelte';
 	import Spotlight from '../lib/components/spotlight.svelte';
-
-	let clientWidth;
 </script>
 
 <Spotlight />
 <page
 	id="root-layout-page"
-	class="flex flex-col h-full overflow-y-auto max-w-screen-xl min-w-[320px] w-full mx-auto"
-	bind:clientWidth
+	class="flex flex-col text-stone-100 h-full px-5 scrollbar-hidden overflow-y-auto max-w-screen-xl min-w-[320px] w-full mx-auto"
 >
 	<nav
 		id="root-layout-nav"
-		class="sticky top-0 inset-x-0 backdrop-blur-sm p-5 justify-between w-full flex"
+		class="sticky items-center top-0 inset-x-0 backdrop-blur-sm py-5 justify-between w-full flex"
 	>
-		<Logo {clientWidth} />
+		<Logo />
 		<Controls />
 	</nav>
-	<main id="root-layout-main" class="w-full px-20 flex flex-col grow">
+	<main id="root-layout-main" class="w-full flex flex-col grow">
 		<slot />
 	</main>
 	<footer class="flex grow-0">
