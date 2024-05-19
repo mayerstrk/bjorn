@@ -5,7 +5,7 @@ const config = {
 	theme: {
 		extend: {
 			fontFamily: {
-				'jetbrains-mono': ['JetBrainsMono', 'monospace']
+				mplus: ['mplus', 'sans-serif'] // Ensure this matches your CSS @font-face definitions
 			}
 		}
 	},

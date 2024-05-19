@@ -29,6 +29,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-svelte": "^3.2.3",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "svelte": "^5.0.0-next.1",
     "svelte-check": "^3.6.0",
     "tailwindcss": "^3.4.3",
@@ -40,6 +41,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@sveltejs/adapter-vercel": "^5.3.0"
+    "@sveltejs/adapter-vercel": "^5.3.0",
+    "@types/three": "^0.164.0",
+    "three": "^0.164.1"
   }
 }

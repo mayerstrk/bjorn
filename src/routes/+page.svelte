@@ -1,37 +1,72 @@
-<article
-	class="p-20 flex flex-col gap-4 mx-20 mt-10 bg-stone-900 bg-opacity-80 shadow shadow-amber-200 text-justify rounded-xl"
->
-	<h1 class="text-lg font-black mb-4">About Me</h1>
-	<p>
-		Hey 👋, I&apos;m Mayer, a full-stack developer 🚀. I lead a team of mobile
-		and web developers in the Israeli Defence Forces.
-	</p>
-	<p>
-		Our work involves understanding the specific processes of our organization
-		and engineering systems that enhance and automate their workflows. We
-		specialize in creating solutions that collect, analyze, and visualize data
-		with the aim of improving decision-making.
-	</p>
-	<p>
-		In addition to my development role, a significant part of my
-		responsibilities involves studying our clients&apos; business processes to
-		create BPDs and plan database infrastructure to make sure we implement the
-		most appropriate technologies to our solutions. Moreover, I am actively
-		involved in educating new recruits about our technology stack, ensuring they
-		are well-equipped and knowledgeable for their roles after my departure.
-	</p>
-	<p>
-		I am passionate about building and designing. Crafting apps that offer an
-		incredible experience for both developers and users is something I find
-		truly rewarding.
-	</p>
-	<p>
-		I have a particular fondness for static types, especially Rust and
-		TypeScript.
-	</p>
-	<p>
-		Above all, I&apos;m a self-learner. I enjoy working on my personal projects
-		and staying up to date with new technologies and frameworks - with htmx,
-		SvelteKit, and Remix currently topping my list of interests.
-	</p>
+<script>
+	import Scene from '$lib/components/dimensional-bjorn.svelte';
+</script>
+
+<article>
+	<Scene />
+	<section>
+		<h2 class="text-lg font-black underline underline-offset-8">About Me</h2>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp;Hey 👋, I'm Mayer, a full-stack developer based in
+			Tel-Aviv🚀. I am passionate about designing and building efficient,
+			<span class="underline underline-offset-4">simple</span>
+			systems that look pretty and are easy to use - from user stories and process
+			diagrams all the way to UX design, infrastructure provisioning and running
+			pilots. Crafting apps that offer an incredible experience for both developers
+			and users and optimizing for performance is something I find truly rewarding.
+			<span class="opacity-0 transition-opacity hover:opacity-100">
+				I don't want JS on the backend :)</span
+			>
+		</p>
+	</section>
+	<section>
+		<h3 class="code-line">flexes:</h3>
+		<ul>
+			<li>I use vim btw</li>
+			<li>I run linux btw</li>
+		</ul>
+	</section>
+	<section>
+		<h3 class="code-line">languages I'm proficient in:</h3>
+		<ul>
+			<li>Typescript</li>
+			<li>Rust</li>
+			<li>Go</li>
+		</ul>
+	</section>
+	<section>
+		<h3 class="code-line">technologies:</h3>
+		<ul>
+			<li>Actix Web</li>
+			<li>Docker</li>
+			<li>NGINX</li>
+			<li>Vercel</li>
+			<li>Heroku</li>
+			<li>Gitlab</li>
+			<li>Svelte</li>
+			<li>Remix</li>
+			<li>React</li>
+			<li>React Native</li>
+			<li>RTK Query</li>
+			<li>Zuztand</li>
+			<li>Tailwind</li>
+			<li>Node</li>
+			<li>PostgreSQL</li>
+			<li>MongoDB</li>
+			<li>Mongoose</li>
+		</ul>
+	</section>
 </article>
+
+<style>
+	article {
+		@apply flex flex-col gap-6 rounded-xl p-3 sm:mt-10 sm:gap-11 sm:p-20 lg:mx-20;
+	}
+	section {
+		@apply flex flex-col gap-4;
+	}
+
+	ul {
+		@apply list-disc pl-8;
+	}
+</style>

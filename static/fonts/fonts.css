@@ -1,0 +1,65 @@
+/* Regular style */
+@font-face {
+	font-family: 'mplus';
+	src:
+		url('/fonts/RoundedMplus1c-Regular.woff2') format('woff2'),
+		url('/fonts/RoundedMplus1c-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Medium style */
+@font-face {
+	font-family: 'mplus';
+	src:
+		url('/fonts/RoundedMplus1c-Medium.woff2') format('woff2'),
+		url('/fonts/RoundedMplus1c-Medium.woff') format('woff');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Bold style */
+@font-face {
+	font-family: 'mplus';
+	src:
+		url('/fonts/RoundedMplus1c-Bold.woff2') format('woff2'),
+		url('/fonts/RoundedMplus1c-Bold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* ExtraBold style */
+@font-face {
+	font-family: 'mplus';
+	src:
+		url('/fonts/RoundedMplus1c-ExtraBold.woff2') format('woff2'),
+		url('/fonts/RoundedMplus1c-ExtraBold.woff') format('woff');
+	font-weight: 800;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Light style */
+@font-face {
+	font-family: 'mplus';
+	src:
+		url('/fonts/RoundedMplus1c-Light.woff2') format('woff2'),
+		url('/fonts/RoundedMplus1c-Light.woff') format('woff');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Thin style */
+@font-face {
+	font-family: 'mplus';
+	src:
+		url('/fonts/RoundedMplus1c-Thin.woff2') format('woff2'),
+		url('/fonts/RoundedMplus1c-Thin.woff') format('woff');
+	font-weight: 100;
+	font-style: normal;
+	font-display: swap;
+}

@@ -6,9 +6,12 @@
 	.scrollbar-hidden {
 		-ms-overflow-style: none; /* IE and Edge */
 		scrollbar-width: none; /* Firefox */
+		&::-webkit-scrollbar {
+			display: none; /* Chrome, Safari, Opera */
+		}
 	}
 
-	.scrollbar-hidden::-webkit-scrollbar {
-		display: none; /* Chrome, Safari, Opera */
+	.code-line {
+		@apply w-fit rounded border-b-4 border-teal-500 bg-teal-300 px-1 font-mono leading-tight text-gray-800;
 	}
 }

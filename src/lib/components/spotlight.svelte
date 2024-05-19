@@ -11,9 +11,9 @@
 <svelte:window on:mousemove={updatePosition} />
 
 <div
-	class="spotlight hidden md:flex"
+	class="spotlight hidden sm:flex"
 	style="
-  background-image: radial-gradient(circle at {x}px {y}px, transparent, rgba(0, 0, 0, 1) 100%);"
+  background-image: radial-gradient(circle at {x}px {y}px, transparent, rgba(0, 0, 0, 0.4) 100%);"
 ></div>
 
 <style>

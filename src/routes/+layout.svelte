@@ -8,20 +8,20 @@
 <Spotlight />
 <page
 	id="root-layout-page"
-	class="flex flex-col text-stone-100 h-full px-5 scrollbar-hidden overflow-y-auto max-w-screen-xl min-w-[320px] w-full mx-auto"
+	class="scrollbar-hidden mx-auto flex h-full w-full min-w-[320px] max-w-screen-xl flex-col overflow-y-auto px-5 text-stone-100"
 >
 	<nav
 		id="root-layout-nav"
-		class="sticky items-center top-0 inset-x-0 backdrop-blur-sm py-5 justify-between w-full flex"
+		class="sticky inset-x-0 top-0 flex w-full items-center justify-between py-5 backdrop-blur-sm"
 	>
 		<Logo />
 		<Controls />
 	</nav>
-	<main id="root-layout-main" class="w-full flex flex-col grow">
+	<main id="root-layout-main" class="flex w-full grow flex-col">
 		<slot />
 	</main>
 	<footer class="flex grow-0">
-		<p class="text-xs md:text-sm text-gray-500 m-auto pb-3">
+		<p class="m-auto pb-3 text-xs text-gray-500 sm:text-sm">
 			&copy; 2024 Mayer Starkman. All rights reserved.
 		</p>
 	</footer>
