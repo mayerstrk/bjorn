@@ -5,4 +5,8 @@ const enum Breakpoint {
 	xl = 1280
 }
 
-export { Breakpoint };
+const enum DimensionalBjornMode {
+	background,
+	box
+}
+export { Breakpoint, DimensionalBjornMode };

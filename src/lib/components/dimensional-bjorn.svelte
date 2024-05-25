@@ -3,105 +3,186 @@
 	import * as THREE from 'three';
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+	import { DimensionalBjornMode } from '../../utils/enums'; // Adjust the path as needed
 
-	let canvas: HTMLCanvasElement;
-	let wrapper: HTMLDivElement;
-	let rotationSpeed = 1700; // Initial high rotation speed
-	const deceleration = 50; // Deceleration rate
+	// State variables
+	let canvas = $state<HTMLCanvasElement | null>(null);
+	let center = $state(new THREE.Vector3());
 	let canvasSize = $state({ width: 0, height: 0 });
 
+	// Get props using $props rune
+	let {
+		mode = DimensionalBjornMode.background
+	}: { mode: DimensionalBjornMode } = $props();
+
+	// Derived settings based on mode and center
+	let settings = $derived.by(() => {
+		switch (mode) {
+			case DimensionalBjornMode.background:
+				return {
+					rotationSpeed: 0.01,
+					minRotationSpeed: 0.002,
+					deceleration: 0.0001,
+					ambientLightIntensity: 0.5,
+					directionalLightIntensity: 3,
+					directionalLightPosition: new THREE.Vector3(10, 20, 60),
+					cameraPosition: new THREE.Vector3(center.x, center.y + 12, center.z),
+					modelPositionFactor: 0.5
+				};
+			case DimensionalBjornMode.box:
+				return {
+					rotationSpeed: 1,
+					minRotationSpeed: 0.01,
+					deceleration: 0.01,
+					ambientLightIntensity: 2,
+					directionalLightIntensity: 2,
+					directionalLightPosition: new THREE.Vector3(0, 50, 10),
+					cameraPosition: new THREE.Vector3(
+						center.x,
+						center.y + 12,
+						center.z + 70
+					),
+					modelPositionFactor: 1
+				};
+			default:
+				throw new Error('Invalid DimensionalBjorn mode');
+		}
+	});
+
+	// Variables for Three.js objects
 	let renderer: THREE.WebGLRenderer;
 	let camera: THREE.PerspectiveCamera;
+	let pivot: THREE.Group;
+	let controls: OrbitControls;
 
-	onMount(() => {
+	// Initialize Three.js scene
+	function initThreeJS() {
 		const scene = new THREE.Scene();
+
 		camera = new THREE.PerspectiveCamera(
 			75,
-			wrapper.clientWidth / wrapper.clientHeight,
+			(canvas?.clientWidth ?? 1) / (canvas?.clientHeight ?? 1),
 			0.1,
 			1000
 		);
+
 		renderer = new THREE.WebGLRenderer({
-			canvas,
+			canvas: canvas ?? undefined,
 			alpha: true,
 			antialias: true
 		});
-
-		// Set pixel ratio for high resolution
 		renderer.setPixelRatio(window.devicePixelRatio);
-		renderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
+		renderer.setSize(canvas?.clientWidth ?? 0, canvas?.clientHeight ?? 0);
+		renderer.shadowMap.enabled = true;
 
-		// Add bright ambient light and hemisphere light for better illumination
-		const ambientLight = new THREE.AmbientLight(0xffffff, 2); // Brighter ambient light
+		// Add lights to the scene
+		const ambientLight = new THREE.AmbientLight(
+			0xffffff,
+			settings.ambientLightIntensity
+		);
 		scene.add(ambientLight);
 
-		const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.5); // Add hemisphere light for even lighting
-		hemisphereLight.position.set(0, 200, 0);
-		scene.add(hemisphereLight);
-
-		const directionalLight = new THREE.DirectionalLight(0xffffff, 2); // Brighter directional light
-		directionalLight.position.set(0, 50, 10).normalize(); // Light coming from the front
+		const directionalLight = new THREE.DirectionalLight(
+			0xffffff,
+			settings.directionalLightIntensity
+		);
+		directionalLight.position.set(
+			settings.directionalLightPosition.x,
+			settings.directionalLightPosition.y,
+			settings.directionalLightPosition.z
+		);
+		directionalLight.castShadow = true;
+		directionalLight.shadow.mapSize.width = 2048;
+		directionalLight.shadow.mapSize.height = 2048;
+		directionalLight.shadow.camera.near = 0.5;
+		directionalLight.shadow.camera.far = 500;
 		scene.add(directionalLight);
 
-		// Load and center the model
+		// Load the GLTF model
 		const loader = new GLTFLoader();
-		loader.load('/three/dimensional-bjorn.gltf', (gltf) => {
-			const model = gltf.scene;
-			scene.add(model);
+		loader.load(
+			'/three/dimensional-bjorn.gltf',
+			(gltf) => {
+				const model = gltf.scene;
+				model.traverse((node) => {
+					node.castShadow = true;
+					node.receiveShadow = true;
+				});
 
-			// Center the model
-			const box = new THREE.Box3().setFromObject(model);
-			const size = box.getSize(new THREE.Vector3());
-			const center = box.getCenter(new THREE.Vector3());
+				// Create pivot and add model to the scene
+				pivot = new THREE.Group();
+				scene.add(pivot);
+				pivot.add(model);
 
-			model.position.set(-center.x, -center.y, -center.z);
+				// Compute the center of the model
+				const box = new THREE.Box3().setFromObject(model);
+				const modelCenter = box.getCenter(new THREE.Vector3());
 
-			camera.position.z = size.length() * 0.7; // Move the camera back to fit the model in view
-			camera.position.y = 12;
+				center = modelCenter;
 
-			const controls = new OrbitControls(camera, renderer.domElement);
-			controls.target.set(0, 0, 0); // Set the controls to orbit around the center of the model
-			controls.enableDamping = true; // Enable damping (inertia)
-			controls.dampingFactor = 0.05; // Damping factor
-			controls.autoRotate = true; // Enable auto-rotation
-			controls.autoRotateSpeed = rotationSpeed; // Set initial rotation speed
+				// Adjust model position
+				model.position.set(-center.x, -center.y, -center.z);
 
-			function animate() {
-				requestAnimationFrame(animate);
+				// Set camera position and controls
+				camera.position.copy(settings.cameraPosition);
+				camera.lookAt(center);
 
-				// Gradually slow down the rotation
-				if (rotationSpeed > 50) {
-					rotationSpeed -= deceleration;
-					controls.autoRotateSpeed = rotationSpeed;
-				} else {
-					rotationSpeed = 0; // Ensure it doesn't go negative
-					controls.autoRotate = false; // Stop auto-rotation when speed reaches zero
+				// Initialize OrbitControls
+				controls = new OrbitControls(camera, renderer.domElement);
+				controls.enableDamping = true;
+				controls.dampingFactor = 0.25;
+				controls.screenSpacePanning = false;
+
+				// Animation loop
+				function animate() {
+					requestAnimationFrame(animate);
+					controls.update();
+
+					// Rotate the pivot group around its Y-axis
+					pivot.rotation.y += settings.rotationSpeed;
+
+					// Slow down the rotation gradually
+					if (settings.rotationSpeed > settings.minRotationSpeed) {
+						settings.rotationSpeed -= settings.deceleration;
+						if (settings.rotationSpeed < settings.minRotationSpeed) {
+							settings.rotationSpeed = settings.minRotationSpeed;
+						}
+					}
+
+					renderer.render(scene, camera);
 				}
 
-				controls.update(); // Required if controls.enableDamping or controls.autoRotate are set to true
-				renderer.render(scene, camera);
+				animate();
+			},
+			undefined,
+			(error) => {
+				console.error('An error occurred while loading the model:', error);
 			}
+		);
+	}
 
-			animate();
-		});
-	});
+	// Handle window resize
+	function onWindowResize() {
+		canvasSize.width = canvas?.clientWidth ?? 0;
+		canvasSize.height = canvas?.clientHeight ?? 0;
 
-	$effect(() => {
-		function onWindowResize() {
-			canvasSize = { width: wrapper.clientWidth, height: wrapper.clientHeight };
+		if (renderer && camera) {
 			renderer.setSize(canvasSize.width, canvasSize.height);
 			camera.aspect = canvasSize.width / canvasSize.height;
 			camera.updateProjectionMatrix();
 		}
+	}
 
+	// Svelte lifecycle hooks
+	onMount(() => {
+		initThreeJS();
 		window.addEventListener('resize', onWindowResize);
-		onWindowResize(); // Call initially to set the canvas size
-
+		onWindowResize(); // Initial call to set the canvas size
 		return () => window.removeEventListener('resize', onWindowResize);
 	});
 
 	$effect(() => {
-		if (canvasSize.width && canvasSize.height) {
+		if (canvasSize.width && canvasSize.height && renderer && camera) {
 			renderer.setSize(canvasSize.width, canvasSize.height);
 			camera.aspect = canvasSize.width / canvasSize.height;
 			camera.updateProjectionMatrix();
@@ -109,16 +190,15 @@
 	});
 </script>
 
-<div class="flex h-full w-full items-center justify-center">
-	<div bind:this={wrapper} class="h-[30vh] w-4/5">
-		<canvas bind:this={canvas} class="h-full w-full"></canvas>
-	</div>
-</div>
+<canvas
+	bind:this={canvas}
+	class=" m-auto {mode === DimensionalBjornMode.background
+		? 'h-full w-full opacity-25'
+		: 'h-[33vh] w-3/4'}"
+></canvas>
 
 <style>
 	canvas {
 		display: block;
-		width: 100%;
-		height: 100%;
 	}
 </style>

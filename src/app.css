@@ -11,7 +11,15 @@
 		}
 	}
 
-	.code-line {
-		@apply w-fit rounded border-b-4 border-teal-500 bg-teal-300 px-1 font-mono leading-tight text-gray-800;
+	.code-line-pink {
+		@apply w-fit rounded border-b-4 border-red-400 bg-red-200 px-1 font-mono leading-tight text-gray-700;
+	}
+
+	.block-stone-300 {
+		@apply m-auto rounded-2xl bg-stone-300 bg-opacity-10 p-5;
+	}
+
+	.indent-1 {
+		margin-left: 2rem;
 	}
 }

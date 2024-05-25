@@ -2,13 +2,12 @@
 	import '../app.css';
 	import Logo from '../lib/components/logo.svelte';
 	import Controls from '../lib/components/nav-controls.svelte';
-	import Spotlight from '../lib/components/spotlight.svelte';
 </script>
 
-<Spotlight />
 <page
 	id="root-layout-page"
 	class="scrollbar-hidden mx-auto flex h-full w-full min-w-[320px] max-w-screen-xl flex-col overflow-y-auto px-5 text-stone-100"
+	onscroll={() => console.log('scrolling')}
 >
 	<nav
 		id="root-layout-nav"
@@ -21,7 +20,7 @@
 		<slot />
 	</main>
 	<footer class="flex grow-0">
-		<p class="m-auto pb-3 text-xs text-gray-500 sm:text-sm">
+		<p class="m-auto pb-3 text-xs text-gray-500 md:text-sm">
 			&copy; 2024 Mayer Starkman. All rights reserved.
 		</p>
 	</footer>
