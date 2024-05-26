@@ -35,21 +35,21 @@
 	});
 </script>
 
-<article>
-	<div bind:this={boxWrapper}>
-		<DimensionalBjorn mode={DimensionalBjornMode.box} />
-	</div>
-	<div
-		class="fixed inset-0 z-[-200] transition-opacity duration-1000 {isBoxVisible
-			? 'opacity-0'
-			: 'opacity-30'}"
-	>
-		<DimensionalBjorn mode={DimensionalBjornMode.background} />
-	</div>
+<div bind:this={boxWrapper}>
+	<DimensionalBjorn mode={DimensionalBjornMode.box} />
+</div>
+<div
+	class="fixed inset-0 z-[-200] transition-opacity duration-1000 {isBoxVisible
+		? 'opacity-[1%]'
+		: 'opacity-[17%]'}"
+>
+	<DimensionalBjorn mode={DimensionalBjornMode.background} />
+</div>
+<article class="flex flex-col gap-6 rounded-xl p-3 sm:gap-11 sm:p-20 lg:mx-20">
 	<p class="block-stone-300 w-full text-center font-mono">
 		Hey 👋 I'm Mayer, a software engineer based in Tel-Aviv 🚀
 	</p>
-	<section>
+	<section id="root-about-me">
 		<h2 class="text-lg font-black underline underline-offset-8">About Me</h2>
 		<p>
 			&nbsp;&nbsp;&nbsp;&nbsp;I am passionate about designing and building
@@ -69,7 +69,7 @@
 	</section>
 	<section>
 		<h3 class="text-lg font-black underline underline-offset-8">Experience</h3>
-		<div class="block-stone-300 relative font-mono font-bold">
+		<div class="block-stone-300 relative z-[-200] font-mono font-bold">
 			<span class="code-line-pink text-white">IDF</span>&nbsp; Was given the
 			opportunity to open a department and recruit members to it. Our purpose
 			was digitalizing and creating visualizations(BI) for day-to-day business
@@ -234,9 +234,6 @@
 </article>
 
 <style>
-	article {
-		@apply flex flex-col gap-6 rounded-xl p-3 sm:mt-10 sm:gap-11 sm:p-20 lg:mx-20;
-	}
 	section {
 		@apply flex flex-col gap-4;
 	}

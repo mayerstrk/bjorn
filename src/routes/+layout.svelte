@@ -6,7 +6,7 @@
 
 <page
 	id="root-layout-page"
-	class="scrollbar-hidden mx-auto flex h-full w-full min-w-[320px] max-w-screen-xl flex-col overflow-y-auto px-5 text-stone-100"
+	class="scrollbar-hidden mx-auto flex h-full w-full min-w-[320px] max-w-screen-xl grow flex-col overflow-y-auto px-5 text-stone-100"
 	onscroll={() => console.log('scrolling')}
 >
 	<nav

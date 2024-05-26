@@ -8,7 +8,6 @@
 	// State variables
 	let canvas = $state<HTMLCanvasElement | null>(null);
 	let center = $state(new THREE.Vector3());
-	let canvasSize = $state({ width: 0, height: 0 });
 
 	// Get props using $props rune
 	let {
@@ -16,38 +15,44 @@
 	}: { mode: DimensionalBjornMode } = $props();
 
 	// Derived settings based on mode and center
-	let settings = $derived.by(() => {
-		switch (mode) {
-			case DimensionalBjornMode.background:
-				return {
-					rotationSpeed: 0.01,
-					minRotationSpeed: 0.002,
-					deceleration: 0.0001,
-					ambientLightIntensity: 0.5,
-					directionalLightIntensity: 3,
-					directionalLightPosition: new THREE.Vector3(10, 20, 60),
-					cameraPosition: new THREE.Vector3(center.x, center.y + 12, center.z),
-					modelPositionFactor: 0.5
-				};
-			case DimensionalBjornMode.box:
-				return {
-					rotationSpeed: 1,
-					minRotationSpeed: 0.01,
-					deceleration: 0.01,
-					ambientLightIntensity: 2,
-					directionalLightIntensity: 2,
-					directionalLightPosition: new THREE.Vector3(0, 50, 10),
-					cameraPosition: new THREE.Vector3(
-						center.x,
-						center.y + 12,
-						center.z + 70
-					),
-					modelPositionFactor: 1
-				};
-			default:
-				throw new Error('Invalid DimensionalBjorn mode');
-		}
-	});
+	let settings: {
+		rotationSpeed: number;
+		minRotationSpeed: number;
+		deceleration: number;
+		ambientLightIntensity: number;
+		directionalLightIntensity: number;
+		directionalLightPosition: THREE.Vector3;
+		cameraPosition: THREE.Vector3;
+		modelPositionFactor: number;
+	};
+	switch (mode) {
+		case DimensionalBjornMode.background:
+			settings = {
+				rotationSpeed: 0.01,
+				minRotationSpeed: 0.001,
+				deceleration: 0.0001,
+				ambientLightIntensity: 0.5,
+				directionalLightIntensity: 3,
+				directionalLightPosition: new THREE.Vector3(10, 20, 60),
+				cameraPosition: new THREE.Vector3(20, 10, 0),
+				modelPositionFactor: 0.5
+			};
+			break;
+		case DimensionalBjornMode.box:
+			settings = {
+				rotationSpeed: 0.4,
+				minRotationSpeed: 0.02,
+				deceleration: 0.005,
+				ambientLightIntensity: 2,
+				directionalLightIntensity: 2,
+				directionalLightPosition: new THREE.Vector3(0, 50, 10),
+				cameraPosition: new THREE.Vector3(30, 10, 0),
+				modelPositionFactor: 1
+			};
+			break;
+		default:
+			throw new Error('Invalid DimensionalBjorn mode');
+	}
 
 	// Variables for Three.js objects
 	let renderer: THREE.WebGLRenderer;
@@ -124,8 +129,15 @@
 				model.position.set(-center.x, -center.y, -center.z);
 
 				// Set camera position and controls
-				camera.position.copy(settings.cameraPosition);
+				camera.position.set(
+					settings.cameraPosition.x,
+					settings.cameraPosition.y,
+					settings.cameraPosition.z
+				);
 				camera.lookAt(center);
+
+				// Set initial rotation to face the front
+				pivot.rotation.y = Math.PI;
 
 				// Initialize OrbitControls
 				controls = new OrbitControls(camera, renderer.domElement);
@@ -161,44 +173,25 @@
 		);
 	}
 
-	// Handle window resize
-	function onWindowResize() {
-		canvasSize.width = canvas?.clientWidth ?? 0;
-		canvasSize.height = canvas?.clientHeight ?? 0;
-
-		if (renderer && camera) {
-			renderer.setSize(canvasSize.width, canvasSize.height);
-			camera.aspect = canvasSize.width / canvasSize.height;
-			camera.updateProjectionMatrix();
-		}
-	}
-
-	// Svelte lifecycle hooks
 	onMount(() => {
 		initThreeJS();
-		window.addEventListener('resize', onWindowResize);
-		onWindowResize(); // Initial call to set the canvas size
-		return () => window.removeEventListener('resize', onWindowResize);
 	});
 
+	// Resize handler to make the canvas responsive
 	$effect(() => {
-		if (canvasSize.width && canvasSize.height && renderer && camera) {
-			renderer.setSize(canvasSize.width, canvasSize.height);
-			camera.aspect = canvasSize.width / canvasSize.height;
-			camera.updateProjectionMatrix();
+		function onWindowResize() {
+			if (canvas) {
+				const width = canvas.parentElement?.clientWidth ?? 0;
+				const height = canvas.parentElement?.clientHeight ?? 0;
+				renderer.setSize(width, height);
+				camera.aspect = width / height;
+				camera.updateProjectionMatrix();
+			}
 		}
+		window.addEventListener('resize', onWindowResize);
+		onWindowResize(); // Call initially to set the canvas size
+		return () => window.removeEventListener('resize', onWindowResize);
 	});
 </script>
 
-<canvas
-	bind:this={canvas}
-	class=" m-auto {mode === DimensionalBjornMode.background
-		? 'h-full w-full opacity-25'
-		: 'h-[33vh] w-3/4'}"
-></canvas>
-
-<style>
-	canvas {
-		display: block;
-	}
-</style>
+<canvas bind:this={canvas} class="h-full w-full"></canvas>
