@@ -35,11 +35,11 @@
 	});
 </script>
 
-<div bind:this={boxWrapper}>
+<div bind:this={boxWrapper} class="h-[25vh]">
 	<DimensionalBjorn mode={DimensionalBjornMode.box} />
 </div>
 <div
-	class="fixed inset-0 z-[-200] transition-opacity duration-1000 {isBoxVisible
+	class="fixed left-0 z-[-200] h-full w-full transition-opacity duration-1000 {isBoxVisible
 		? 'opacity-[1%]'
 		: 'opacity-[17%]'}"
 >
