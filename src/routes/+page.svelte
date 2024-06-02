@@ -1,53 +1,23 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import DimensionalBjorn from '../lib/components/dimensional-bjorn.svelte';
 	import { DimensionalBjornMode } from '../utils/enums';
 
 	let showMore = $state(false);
-	let isBoxVisible = $state(true);
 	let boxWrapper = $state<HTMLElement | null>(null);
 
 	function toggleShowMore() {
 		showMore = !showMore;
 	}
-
-	function handleIntersection(entries: IntersectionObserverEntry[]) {
-		entries.forEach((entry) => {
-			isBoxVisible = entry.isIntersecting;
-		});
-	}
-
-	onMount(() => {
-		const observer = new IntersectionObserver(handleIntersection, {
-			root: null,
-			threshold: 0.1
-		});
-
-		if (boxWrapper) {
-			observer.observe(boxWrapper);
-		}
-
-		return () => {
-			if (boxWrapper) {
-				observer.unobserve(boxWrapper);
-			}
-		};
-	});
 </script>
 
-<div bind:this={boxWrapper} class="h-[25vh]">
+<div id="root-box-bjorn-wrapper" bind:this={boxWrapper} class="h-[30vh]">
 	<DimensionalBjorn mode={DimensionalBjornMode.box} />
 </div>
-<div
-	class="fixed left-0 z-[-200] h-full w-full transition-opacity duration-1000 {isBoxVisible
-		? 'opacity-[1%]'
-		: 'opacity-[17%]'}"
+<article
+	class="flex h-full w-full grow flex-col gap-6 rounded-xl p-3 pt-0 sm:gap-11 sm:p-20 sm:pt-0 lg:mx-20"
 >
-	<DimensionalBjorn mode={DimensionalBjornMode.background} />
-</div>
-<article class="flex flex-col gap-6 rounded-xl p-3 sm:gap-11 sm:p-20 lg:mx-20">
-	<p class="block-stone-300 w-full text-center font-mono">
-		Hey 👋 I'm Mayer, a software engineer based in Tel-Aviv 🚀
+	<p class="block-stone-300 w-full text-center font-mono text-sm">
+		Hey, I'm a software engineer based in Tel-Aviv 🚀
 	</p>
 	<section id="root-about-me">
 		<h2 class="text-lg font-black underline underline-offset-8">About Me</h2>
@@ -211,7 +181,7 @@
 		<ul>
 			<li>Agile Project Management</li>
 			<li>D3</li>
-			<li>3JS</li>
+			<li>Three.js</li>
 			<li>Actix Web</li>
 			<li>Docker</li>
 			<li>NGINX</li>
