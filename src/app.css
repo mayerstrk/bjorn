@@ -16,10 +16,30 @@
 	}
 
 	.block-stone-300 {
-		@apply m-auto rounded-2xl bg-stone-300 bg-opacity-10 p-3;
+		@apply m-auto rounded-2xl bg-stone-300 bg-opacity-10;
 	}
 
 	.indent-1 {
 		margin-left: 2rem;
+	}
+
+	.animation-dalay-500 {
+		animation-delay: 0.5s;
+	}
+
+	.animation-delay-1000 {
+		animation-delay: 1s;
+	}
+
+	.animation-delay-1500 {
+		animation-delay: 1.5s;
+	}
+
+	.animation-delay-2000 {
+		animation-delay: 2s;
+	}
+
+	.animation-delay-4000 {
+		animation-delay: 4s;
 	}
 }

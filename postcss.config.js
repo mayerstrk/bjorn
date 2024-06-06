@@ -3,6 +3,7 @@ export default {
 		tailwindcss: {
 			config: './tailwind.config.ts'
 		},
-		autoprefixer: {}
+		autoprefixer: {},
+		...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {})
 	}
 };

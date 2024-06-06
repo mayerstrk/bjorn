@@ -238,7 +238,10 @@
 </script>
 
 {#if settings.useLoadingAnimation}
-	<div class="flex h-56 items-center justify-center {!isLoading && 'hidden'}">
+	<div
+		class="flex h-full w-full items-center justify-center {!isLoading &&
+			'hidden'}"
+	>
 		<DoubleBounce color="#fff" size="35" />
 	</div>
 {/if}
