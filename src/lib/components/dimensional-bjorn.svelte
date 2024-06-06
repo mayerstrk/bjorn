@@ -4,7 +4,6 @@
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 	import { DimensionalBjornMode } from '../../utils/enums'; // Adjust the path as needed
-	import { DoubleBounce } from 'svelte-loading-spinners';
 
 	// State variables
 	let canvas = $state<HTMLCanvasElement | null>(null);
@@ -76,7 +75,7 @@
 	);
 
 	// Initialize Three.js scene
-	function initThreeJS() {
+	async function initThreeJS() {
 		const scene = new THREE.Scene();
 
 		camera = new THREE.PerspectiveCamera(
@@ -215,8 +214,8 @@
 		);
 	}
 
-	onMount(() => {
-		initThreeJS();
+	onMount(async () => {
+		await initThreeJS();
 	});
 
 	// Resize handler to make the canvas responsive
@@ -242,7 +241,19 @@
 		class="flex h-full w-full items-center justify-center {!isLoading &&
 			'hidden'}"
 	>
-		<DoubleBounce color="#fff" size="35" />
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="lucide lucide-loader-circle animate-spin"
+			><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg
+		>
 	</div>
 {/if}
 
