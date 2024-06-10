@@ -7,15 +7,16 @@
 	function toggleShowMore() {
 		showMore = !showMore;
 	}
+
+	$effect(() => {});
 </script>
 
 <section id="root-hero">
 	<div
 		id="root-hero-dinmensional-bjorn-wrapper"
-		class="h-[30vh] bg-transparent"
+		class="-z-5 h-[30vh] bg-transparent"
 	>
 		<DimensionalBjorn mode={DimensionalBjornMode.box} />
-		<div></div>
 	</div>
 	<p
 		id="root-hero-introduction"

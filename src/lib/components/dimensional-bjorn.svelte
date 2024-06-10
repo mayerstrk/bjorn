@@ -257,4 +257,4 @@
 	</div>
 {/if}
 
-<canvas bind:this={canvas} class="h-full w-full"></canvas>
+<canvas bind:this={canvas} class="z-0 h-full w-full"></canvas>
