@@ -41,7 +41,7 @@
 		</div>
 		<div
 			id="root-hero-image-wrapper"
-			class="relative box-content size-[125px] min-w-[125px] overflow-hidden rounded-full border-8 border-double border-cyan-300 sm:size-2/5 md:size-1/5"
+			class="relative box-content size-[110px] min-w-[110px] overflow-hidden rounded-full border-8 border-double border-cyan-300 md:size-[13%]"
 		>
 			<div
 				id="root-hero-image-overlay"
