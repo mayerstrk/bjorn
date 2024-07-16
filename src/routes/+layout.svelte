@@ -3,7 +3,7 @@
 	import Nav from '$lib/components/nav.svelte';
 </script>
 
-<div class="my-1 h-auto bg-yellow-200 text-center">Under Construction</div>
+<div class="h-auto bg-yellow-200 py-1 text-center">Under Construction</div>
 <Nav />
 <page
 	id="root-layout-page"
