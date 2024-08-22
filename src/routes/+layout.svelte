@@ -4,7 +4,8 @@
 </script>
 
 <div class="h-auto bg-yellow-200 py-1 text-center">Work in progress</div>
-<Nav />
+<Nav 
+/>
 <page
 	id="root-layout-page"
 	class="scrollbar-hidden mx-auto flex h-full w-full min-w-[320px] max-w-screen-xl grow animate-fade-in flex-col px-5 text-stone-100 opacity-0"
