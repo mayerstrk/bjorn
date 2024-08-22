@@ -54,7 +54,7 @@
 	<div id="nav-controls" class="flex items-center gap-2">
 		<a
 			href="https://github.com/mayerstrk"
-			class="flex size-9 w-0 items-center rounded-md border-2 border-stone-700 bg-stone-800 md:size-11"
+			class="flex size-9 items-center rounded-md border-2 border-stone-700 bg-stone-800 md:size-11"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
