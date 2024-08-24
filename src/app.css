@@ -12,7 +12,7 @@
 	}
 
 	.code-line-pink {
-		@apply w-fit rounded border-b-4 border-red-400 bg-red-200 px-1 font-mono leading-tight text-gray-700;
+		@apply w-fit rounded border-b-2 border-red-400 bg-red-200 px-2 py-1 font-mono leading-tight text-pink-700;
 	}
 
 	.block-stone-300 {
