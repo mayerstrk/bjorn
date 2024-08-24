@@ -72,7 +72,7 @@
 	<h3 class="text-lg font-black underline underline-offset-8">
 		&nbsp;Experience&nbsp;
 	</h3>
-	<div class="block-stone-300 relative p-5 pb-7 md:p-10 md:pb-12">
+	<div class="block-stone-300 relative p-5 pb-16 md:p-10 md:pb-12">
 		<span class="code-line-pink text-white">IDF</span>&nbsp;&nbsp;&nbsp;I was
 		given the opportunity to
 		<span class="font-bold">lead a new department</span>
@@ -94,7 +94,7 @@
 			</span>
 			<span class="mt-4 block font-light"
 				>Clearly defined user stories, designed Business Process Diagrams and
-				planed database infrastructure
+				planned database infrastructure
 			</span>
 			<span class="mt-4 block font-light"
 				>I was actively involved in educating new recruits about our technology
