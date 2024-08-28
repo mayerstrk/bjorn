@@ -237,7 +237,10 @@
 </script>
 
 {#if settings.useLoadingAnimation}
-	<div class="flex w-full items-center justify-center {!isLoading && 'hidden'}">
+	<div
+		class="flex h-full w-full items-center justify-center {!isLoading &&
+			'hidden'}"
+	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
