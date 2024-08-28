@@ -63,10 +63,12 @@
 				></div>
 				<enhanced:img
 					class="w-full rounded-full opacity-70"
-					src="../../static/images/me.webp"
-					sizes="(max-width: 117px) 110px,
+					src="../../static/images/me-300.webp"
+					srcset="../../static/images/me-200.webp 100w,
+            ../../static/images/me-300.webp 200w"
+					sizes="(max-width: 768px) 110px,
            13vw"
-					alt="A picture of Mayer Starkman"
+					alt="A portrait of Mayer Starkman"
 					loading="lazy"
 				></enhanced:img>
 			</div>
