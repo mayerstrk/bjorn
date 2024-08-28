@@ -3,14 +3,13 @@
 	import * as THREE from 'three';
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-	import { DimensionalBjornMode } from '../../utils/enums'; // Adjust the path as needed
+	import { DimensionalBjornMode } from '../../utils/enums';
 
 	// State variables
 	let canvas = $state<HTMLCanvasElement | null>(null);
 	let center = $state(new THREE.Vector3());
 	let isLoading = $state(true);
 
-	// Get props using $props rune
 	let {
 		mode = DimensionalBjornMode.background
 	}: { mode: DimensionalBjornMode } = $props();
@@ -18,21 +17,9 @@
 	const settings = getSettings(mode);
 
 	function getSettings(mode: DimensionalBjornMode) {
-		// Derived settings based on mode and center
-		let settings: {
-			rotationSpeed: number;
-			minRotationSpeed: number;
-			ambientLightIntensity: number;
-			directionalLightIntensity: number;
-			directionalLightPosition: THREE.Vector3;
-			cameraPosition: THREE.Vector3;
-			castShadow: boolean;
-			useLoadingAnimation: boolean;
-		};
-
 		switch (mode) {
 			case DimensionalBjornMode.background:
-				settings = {
+				return {
 					rotationSpeed: 0.01,
 					minRotationSpeed: 0.001,
 					ambientLightIntensity: 0.5,
@@ -42,9 +29,8 @@
 					castShadow: false,
 					useLoadingAnimation: false
 				};
-				break;
 			case DimensionalBjornMode.box:
-				settings = {
+				return {
 					rotationSpeed: 2,
 					minRotationSpeed: 0.003,
 					ambientLightIntensity: 0.6,
@@ -54,12 +40,9 @@
 					castShadow: true,
 					useLoadingAnimation: true
 				};
-				break;
 			default:
 				throw new Error('Invalid DimensionalBjorn mode');
 		}
-
-		return settings;
 	}
 
 	// Variables for Three.js objects
@@ -68,7 +51,9 @@
 	let pivot: THREE.Group;
 	let controls: OrbitControls;
 
-	// Calculate the decay factor for decceleration
+	// Declare 'scene' at the top-level scope
+	let scene: THREE.Scene;
+
 	const decayFactor = Math.pow(
 		settings.minRotationSpeed / settings.rotationSpeed,
 		1 / 160
@@ -76,7 +61,7 @@
 
 	// Initialize Three.js scene
 	async function initThreeJS() {
-		const scene = new THREE.Scene();
+		scene = new THREE.Scene(); // Initialize 'scene' here
 
 		camera = new THREE.PerspectiveCamera(
 			75,
@@ -87,8 +72,8 @@
 
 		renderer = new THREE.WebGLRenderer({
 			canvas: canvas ?? undefined,
-			alpha: true, // Make the canvas transparent
-			antialias: true
+			alpha: true, // Consider setting alpha to false if the background can be solid
+			antialias: false // Disabling antialiasing can improve performance
 		});
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(canvas?.clientWidth ?? 0, canvas?.clientHeight ?? 0);
@@ -98,7 +83,7 @@
 			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 		}
 
-		// Add lights to the scene
+		// Lights
 		const ambientLight = new THREE.AmbientLight(
 			0xffffff,
 			settings.ambientLightIntensity
@@ -109,28 +94,24 @@
 			0xffffff,
 			settings.directionalLightIntensity
 		);
-		directionalLight.position.set(
-			settings.directionalLightPosition.x,
-			settings.directionalLightPosition.y,
-			settings.directionalLightPosition.z
-		);
-		directionalLight.castShadow = true;
-		directionalLight.shadow.mapSize.width = 2048;
-		directionalLight.shadow.mapSize.height = 2048;
+		directionalLight.position.copy(settings.directionalLightPosition);
+		directionalLight.castShadow = settings.castShadow;
 
 		if (settings.castShadow) {
-			// Adjust shadow camera settings
+			// Shadow camera settings optimization
 			const d = 100;
-			directionalLight.shadow.camera.left = -d;
-			directionalLight.shadow.camera.right = d;
-			directionalLight.shadow.camera.top = d;
-			directionalLight.shadow.camera.bottom = -d;
-			directionalLight.shadow.camera.near = 0.5;
-			directionalLight.shadow.camera.far = 500;
+			Object.assign(directionalLight.shadow.camera, {
+				left: -d,
+				right: d,
+				top: d,
+				bottom: -d,
+				near: 0.5,
+				far: 500
+			});
 			scene.add(directionalLight);
 		}
 
-		// Load the GLTF model
+		// Load GLTF model
 		const loader = new GLTFLoader();
 		loader.load(
 			'/three/dimensional-bjorn.gltf',
@@ -138,47 +119,34 @@
 				const model = gltf.scene;
 				model.traverse((node) => {
 					if (node instanceof THREE.Mesh) {
-						node.castShadow = true;
-						node.receiveShadow = true;
+						node.castShadow = settings.castShadow;
+						node.receiveShadow = settings.castShadow;
 					}
 				});
 
-				// Create pivot and add model to the scene
 				pivot = new THREE.Group();
 				scene.add(pivot);
 				pivot.add(model);
 
-				// Compute the center of the model and the bounding box
 				const box = new THREE.Box3().setFromObject(model);
-				const modelCenter = box.getCenter(new THREE.Vector3());
-
-				center = modelCenter;
+				center = box.getCenter(new THREE.Vector3());
 
 				if (settings.castShadow) {
-					// Create a plane to receive shadows
 					const planeGeometry = new THREE.PlaneGeometry(500, 500);
 					const planeMaterial = new THREE.ShadowMaterial({ opacity: 0.5 });
 					const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 					plane.rotation.x = -Math.PI / 2;
 					plane.receiveShadow = true;
 					scene.add(plane);
-					const modelHeight = box.getSize(new THREE.Vector3()).y;
-					// Position the plane just below the model
-					plane.position.y = -modelHeight / 2 - 1;
+
+					plane.position.y = -box.getSize(new THREE.Vector3()).y / 2 - 1;
 				}
 
-				// Adjust model position
 				model.position.set(-center.x, -center.y, -center.z);
 
-				// Set camera position and controls
-				camera.position.set(
-					settings.cameraPosition.x,
-					settings.cameraPosition.y,
-					settings.cameraPosition.z
-				);
+				camera.position.copy(settings.cameraPosition);
 				camera.lookAt(center);
 
-				// Set initial rotation to face the front
 				pivot.rotation.y = Math.PI;
 
 				// Initialize OrbitControls
@@ -187,38 +155,34 @@
 				controls.dampingFactor = 0.25;
 				controls.screenSpacePanning = false;
 
-				// Animation loop
-				function animate() {
-					requestAnimationFrame(animate);
-					controls.update();
-
-					// Rotate the pivot group around its Y-axis
-					pivot.rotation.y += settings.rotationSpeed;
-
-					// Gradual deceleration
-					settings.rotationSpeed *= decayFactor;
-					if (settings.rotationSpeed < settings.minRotationSpeed) {
-						settings.rotationSpeed = settings.minRotationSpeed;
-					}
-
-					renderer.render(scene, camera);
-				}
-
-				animate();
+				// Start the animation loop
+				requestAnimationFrame(animate);
 				isLoading = false;
 			},
 			undefined,
 			(error) => {
-				console.error('An error occurred while loading the model:', error);
+				console.error('Error loading the model:', error);
 			}
 		);
 	}
 
-	onMount(async () => {
-		await initThreeJS();
-	});
+	function animate() {
+		requestAnimationFrame(animate);
 
-	// Resize handler to make the canvas responsive
+		controls.update();
+		pivot.rotation.y += settings.rotationSpeed;
+
+		settings.rotationSpeed *= decayFactor;
+		if (settings.rotationSpeed < settings.minRotationSpeed) {
+			settings.rotationSpeed = settings.minRotationSpeed;
+		}
+
+		renderer.render(scene, camera);
+	}
+
+	onMount(initThreeJS);
+
+	// Resize handler for responsiveness
 	$effect(() => {
 		function onWindowResize() {
 			if (canvas) {
@@ -230,17 +194,13 @@
 			}
 		}
 		window.addEventListener('resize', onWindowResize);
-		onWindowResize(); // Call initially to set the canvas size
+		onWindowResize();
 		return () => window.removeEventListener('resize', onWindowResize);
 	});
-	console.log('ran');
 </script>
 
 {#if settings.useLoadingAnimation}
-	<div
-		class="flex h-full w-full items-center justify-center {!isLoading &&
-			'hidden'}"
-	>
+	<div class="flex w-full items-center justify-center {!isLoading && 'hidden'}">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
@@ -256,5 +216,4 @@
 		>
 	</div>
 {/if}
-
-<canvas bind:this={canvas} class="z-0 w-full"></canvas>
+<canvas bind:this={canvas} class="z-0 w-full"> </canvas>
