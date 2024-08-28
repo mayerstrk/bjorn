@@ -49,7 +49,7 @@
 			></div>
 			<enhanced:img
 				class="h-full w-full rounded-full opacity-70"
-				src="/images/me.webp"
+				src="../../static/images/me.webp"
 				alt="A pictiure of Mayer Starkman"
 			></enhanced:img>
 		</div>
