@@ -7,37 +7,12 @@
 		showMore = !showMore;
 	}
 
-	// List of technical skills for efficient rendering
-	const technicalSkills = [
-		'Agile Project Management',
-		'D3',
-		'Three.js',
-		'Actix Web',
-		'Docker',
-		'NGINX',
-		'Vercel',
-		'Heroku',
-		'Gitlab',
-		'Svelte',
-		'Remix',
-		'React',
-		'React Native',
-		'RTK Query',
-		'Zustand',
-		'Tailwind',
-		'Node',
-		'PostgreSQL',
-		'MongoDB',
-		'Mongoose'
-	];
-
-	// Languages proficient in
-	const languages = ['Typescript', 'Rust', 'Go'];
+	$effect(() => {});
 </script>
 
 <section class="section" id="root-hero">
 	<div
-		id="root-hero-dimensional-bjorn-wrapper"
+		id="root-hero-dinmensional-bjorn-wrapper"
 		class="-z-5 h-[30vh] bg-transparent"
 	>
 		<DimensionalBjorn />
@@ -50,7 +25,7 @@
 	</p>
 	<div
 		id="root-hero-main"
-		class="flex animate-fade-in-up flex-row items-center justify-center gap-6 py-4 sm:flex-row md:gap-14"
+		class="duration-2000 animation-1000 flex animate-fade-in-up flex-row items-center justify-center gap-6 py-4 opacity-0 sm:flex-row md:gap-14"
 	>
 		<div
 			id="root-hero-text"
@@ -71,16 +46,11 @@
 				id="root-hero-image-overlay"
 				class="absolute inset-0 w-full bg-gradient-to-br from-red-700 to-cyan-700"
 			></div>
-			<img
-				class="w-full rounded-full opacity-70"
-				src="/images/me.webp"
-				srcset="/images/me-small.webp 300w, /images/me.webp 600w"
-				sizes="(max-width: 600px) 300px, 600px"
-				width="600"
-				height="600"
-				alt="Mayer Starkman"
-				loading="lazy"
-			/>
+			<enhanced:img
+				class=" w-full rounded-full opacity-70"
+				src="../../static/images/me.webp"
+				alt="A pictiure of Mayer Starkman"
+			></enhanced:img>
 		</div>
 	</div>
 	<p id="root-hero-about-me" class="m-auto max-w-[900px] py-2">
@@ -97,7 +67,6 @@
 		>
 	</p>
 </section>
-
 <section class="section">
 	<h3 class="text-lg font-black underline underline-offset-8">
 		&nbsp;Experience&nbsp;
@@ -148,6 +117,7 @@
 					stroke-width="2"
 					stroke-linecap="round"
 					stroke-linejoin="round"
+					class="lucide lucide-chevron-up"
 				>
 					<path d="m18 15-6-6-6 6" />
 				</svg>
@@ -162,6 +132,7 @@
 					stroke-width="2"
 					stroke-linecap="round"
 					stroke-linejoin="round"
+					class="lucide lucide-chevron-down"
 				>
 					<path d="m6 9 6 6 6-6" />
 				</svg>
@@ -185,9 +156,9 @@
 	</div>
 	<div class="block-stone-300 relative p-5 md:p-10">
 		<span class="code-line-pink text-white">IDF</span>&nbsp;&nbsp;&nbsp;Started
-		as a network administrator and got
+		as a network adminisrator and got
 		<span class="font-bold">promoted to Team Leader within six months </span>
-		due to leadership, technological proficiency and creative initiative.
+		due to leadership, technological proficiency and creative innitiatve.
 
 		<span class="mt-4 block font-light"
 			>Created documentation, automated departmental processes and developed
@@ -196,7 +167,6 @@
 		>
 	</div>
 </section>
-
 <section class="section">
 	<h3 class="text-lg font-black underline underline-offset-8">Details</h3>
 	<h3 class="code-line">I flex:</h3>
@@ -205,53 +175,46 @@
 		<li>I run linux btw</li>
 	</ul>
 </section>
-
 <section class="section">
 	<h3 class="code-line">languages I'm proficient in:</h3>
 	<ul class="ul">
-		{#each languages as language}
-			<li>{language}</li>
-		{/each}
+		<li>Typescript</li>
+		<li>Rust</li>
+		<li>Go</li>
 	</ul>
 </section>
-
 <section class="section">
 	<h3 class="code-line">Technical skills</h3>
 	<ul class="ul">
-		{#each technicalSkills as skill}
-			<li>{skill}</li>
-		{/each}
+		<li>Agile Project Management</li>
+		<li>D3</li>
+		<li>Three.js</li>
+		<li>Actix Web</li>
+		<li>Docker</li>
+		<li>NGINX</li>
+		<li>Vercel</li>
+		<li>Heroku</li>
+		<li>Gitlab</li>
+		<li>Svelte</li>
+		<li>Remix</li>
+		<li>React</li>
+		<li>React Native</li>
+		<li>RTK Query</li>
+		<li>Zuztand</li>
+		<li>Tailwind</li>
+		<li>Node</li>
+		<li>PostgreSQL</li>
+		<li>MongoDB</li>
+		<li>Mongoose</li>
 	</ul>
 </section>
 
 <style>
 	.section {
-		margin: auto;
-		margin-bottom: 1.75rem;
-		display: flex;
-		width: 100%;
-		max-width: 900px;
-		flex-direction: column;
-		gap: 1rem;
+		@apply m-auto mb-7 flex w-full max-w-[900px] flex-col gap-4;
 	}
 
 	.ul {
-		list-style-type: disc;
-		padding-left: 2rem;
-	}
-
-	@keyframes fadeInUp {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	.animate-fade-in-up {
-		animation: fadeInUp 0.5s ease-out;
+		@apply list-disc pl-8;
 	}
 </style>
