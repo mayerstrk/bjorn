@@ -6,7 +6,7 @@ export async function handle({ event, resolve }) {
 			// Preload font files from the static/fonts directory
 			if (
 				type === 'asset' &&
-				path.includes('/fonts/') &&
+				path.includes('fonts') &&
 				path.endsWith('.woff2')
 			) {
 				return true;

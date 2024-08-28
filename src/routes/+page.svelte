@@ -47,11 +47,11 @@
 				id="root-hero-image-overlay"
 				class="absolute inset-0 h-full w-full bg-gradient-to-br from-red-700 to-cyan-700"
 			></div>
-			<img
-				class="rounded-full opacity-70"
+			<enhanced:img
+				class="h-full w-full rounded-full opacity-70"
 				src="/images/me.webp"
 				alt="A pictiure of Mayer Starkman"
-			/>
+			></enhanced:img>
 		</div>
 	</div>
 	<p id="root-hero-about-me" class="m-auto max-w-[900px] py-2">
