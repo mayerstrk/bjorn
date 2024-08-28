@@ -49,7 +49,7 @@
 			></div>
 			<img
 				class="rounded-full opacity-70"
-				src="/images/me.jpg"
+				src="/images/me.webp"
 				alt="A pictiure of Mayer Starkman"
 			/>
 		</div>
@@ -86,11 +86,12 @@
 		and performance.
 		{#if showMore}
 			<span class="mt-4 block font-light">
-				Our devlopment's core laid in understanding the specific processes of
-				our organization and engineering systems that enhance and automate their
-				workflows to increase operational efficiency. We specialized in creating
-				solutions that strategically collect, analyze, and visualize data to
-				provide insights and improve decision-making.
+				The core of our development work was understanding the specific
+				processes of our organization and our focus was engineering systems that
+				enhance and automate their workflows to increase operational efficiency.
+				We specialized in creating solutions that strategically collect,
+				analyze, and visualize data to provide insights and improve
+				decision-making.
 			</span>
 			<span class="mt-4 block font-light"
 				>Clearly defined user stories, designed Business Process Diagrams and
@@ -184,7 +185,7 @@
 	</ul>
 </section>
 <section class="section">
-	<h3 class="code-line">technologies:</h3>
+	<h3 class="code-line">Technical skills</h3>
 	<ul class="ul">
 		<li>Agile Project Management</li>
 		<li>D3</li>

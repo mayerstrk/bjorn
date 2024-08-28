@@ -1,10 +1,12 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
 import { visualizer } from 'rollup-plugin-visualizer';
+import { enhancedImages } from '@sveltejs/enhanced-img';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	plugins: [
 		sveltekit(),
+		enhancedImages(),
 		visualizer({ emitFile: true, filename: 'stats.html' })
 	],
 	test: {
