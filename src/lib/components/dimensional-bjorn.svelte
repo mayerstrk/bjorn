@@ -237,10 +237,7 @@
 </script>
 
 {#if settings.useLoadingAnimation}
-	<div
-		class="flex h-full w-full items-center justify-center {!isLoading &&
-			'hidden'}"
-	>
+	<div class="flex w-full items-center justify-center {!isLoading && 'hidden'}">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
@@ -257,4 +254,4 @@
 	</div>
 {/if}
 
-<canvas bind:this={canvas} class="z-0 h-full w-full"></canvas>
+<canvas bind:this={canvas} class="z-0 w-full"></canvas>
