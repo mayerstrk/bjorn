@@ -62,9 +62,12 @@
 					class="absolute inset-0 w-full bg-gradient-to-br from-red-700 to-cyan-700"
 				></div>
 				<enhanced:img
-					class=" w-full rounded-full opacity-70"
+					class="w-full rounded-full opacity-70"
 					src="../../static/images/me.webp"
-					alt="A pictiure of Mayer Starkman"
+					sizes="(max-width: 117px) 110px,
+           13vw"
+					alt="A picture of Mayer Starkman"
+					loading="lazy"
 				></enhanced:img>
 			</div>
 		</div>
@@ -120,7 +123,7 @@
 			{/if}
 			<button
 				class="absolute bottom-5 right-5 flex items-center justify-center rounded-full bg-white p-1 text-xs text-black hover:text-blue-700"
-				on:click={toggleShowMore}
+				onclick={toggleShowMore}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
