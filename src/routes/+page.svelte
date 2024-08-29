@@ -20,7 +20,7 @@
 	<section class="section" id="root-hero">
 		<div
 			id="root-hero-dimensional-bjorn-wrapper"
-			class="-z-5 h-[50vh] bg-transparent"
+			class="-z-5 h-[30vh] bg-transparent"
 		>
 			<DimensionalBjorn />
 		</div>
