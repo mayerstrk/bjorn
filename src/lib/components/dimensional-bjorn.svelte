@@ -1,9 +1,24 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
+	import {
+		Scene,
+		PerspectiveCamera,
+		WebGLRenderer,
+		AmbientLight,
+		DirectionalLight,
+		Group,
+		Box3,
+		Vector3,
+		PlaneGeometry,
+		ShadowMaterial,
+		Mesh,
+		PCFSoftShadowMap
+	} from 'three';
+	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-	// State variables
-	let canvas = $state<HTMLCanvasElement | null>(null);
-	let isLoading = $state(true);
+	let canvas: HTMLCanvasElement;
+	let isLoading = true;
 
 	const settings = {
 		rotationSpeed: 2,
@@ -15,50 +30,37 @@
 		castShadow: true
 	};
 
-	// Calculate the decay factor for deceleration
 	const decayFactor = Math.pow(
 		settings.minRotationSpeed / settings.rotationSpeed,
 		1 / 160
 	);
 
-	let cleanup: (() => void) | null = null;
-
-	// Initialize Three.js scene
 	async function initThreeJS() {
-		const THREE = await import('three');
-		const { GLTFLoader } = await import(
-			'three/examples/jsm/loaders/GLTFLoader.js'
-		);
-		const { OrbitControls } = await import(
-			'three/examples/jsm/controls/OrbitControls.js'
-		);
-
-		const scene = new THREE.Scene();
-		const camera = new THREE.PerspectiveCamera(
+		const scene = new Scene();
+		const camera = new PerspectiveCamera(
 			75,
-			(canvas?.clientWidth ?? 1) / (canvas?.clientHeight ?? 1),
+			canvas.clientWidth / canvas.clientHeight,
 			0.1,
 			1000
 		);
 
-		const renderer = new THREE.WebGLRenderer({
-			canvas: canvas ?? undefined,
+		const renderer = new WebGLRenderer({
+			canvas,
 			alpha: true,
 			antialias: true
 		});
 		renderer.setPixelRatio(window.devicePixelRatio);
-		renderer.setSize(canvas?.clientWidth ?? 0, canvas?.clientHeight ?? 0);
+		renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 		renderer.shadowMap.enabled = settings.castShadow;
-		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+		renderer.shadowMap.type = PCFSoftShadowMap;
 
-		// Add lights to the scene
-		const ambientLight = new THREE.AmbientLight(
+		const ambientLight = new AmbientLight(
 			0xffffff,
 			settings.ambientLightIntensity
 		);
 		scene.add(ambientLight);
 
-		const directionalLight = new THREE.DirectionalLight(
+		const directionalLight = new DirectionalLight(
 			0xffffff,
 			settings.directionalLightIntensity
 		);
@@ -79,33 +81,30 @@
 		directionalLight.shadow.camera.far = 500;
 		scene.add(directionalLight);
 
-		// Load the GLTF model
 		const loader = new GLTFLoader();
 		loader.load(
 			'/three/dimensional-bjorn.gltf',
 			(gltf) => {
 				const model = gltf.scene;
 				model.traverse((node) => {
-					if (node instanceof THREE.Mesh) {
-						node.castShadow = settings.castShadow;
-						node.receiveShadow = settings.castShadow;
-					}
+					node.castShadow = settings.castShadow;
+					node.receiveShadow = settings.castShadow;
 				});
 
-				const pivot = new THREE.Group();
+				const pivot = new Group();
 				scene.add(pivot);
 				pivot.add(model);
 
-				const box = new THREE.Box3().setFromObject(model);
-				const center = box.getCenter(new THREE.Vector3());
+				const box = new Box3().setFromObject(model);
+				const center = box.getCenter(new Vector3());
 
-				const planeGeometry = new THREE.PlaneGeometry(500, 500);
-				const planeMaterial = new THREE.ShadowMaterial({ opacity: 0.5 });
-				const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+				const planeGeometry = new PlaneGeometry(500, 500);
+				const planeMaterial = new ShadowMaterial({ opacity: 0.5 });
+				const plane = new Mesh(planeGeometry, planeMaterial);
 				plane.rotation.x = -Math.PI / 2;
 				plane.receiveShadow = true;
 				scene.add(plane);
-				const modelHeight = box.getSize(new THREE.Vector3()).y;
+				const modelHeight = box.getSize(new Vector3()).y;
 				plane.position.y = -modelHeight / 2 - 1;
 
 				model.position.set(-center.x, -center.y, -center.z);
@@ -153,11 +152,11 @@
 					}
 				});
 
-				if (canvas?.parentElement) {
+				if (canvas.parentElement) {
 					resizeObserver.observe(canvas.parentElement);
 				}
 
-				cleanup = () => {
+				return () => {
 					resizeObserver.disconnect();
 					renderer.dispose();
 					controls.dispose();
@@ -171,15 +170,7 @@
 		);
 	}
 
-	onMount(() => {
-		initThreeJS();
-	});
-
-	onDestroy(() => {
-		if (cleanup) {
-			cleanup();
-		}
-	});
+	onMount(initThreeJS);
 </script>
 
 <div class="flex w-full items-center justify-center {!isLoading && 'hidden'}">

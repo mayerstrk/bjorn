@@ -1,4 +1,6 @@
 <script lang="ts">
+	import DimensionalBjorn from '$lib/components/dimensional-bjorn.svelte';
+
 	let showMore = $state(false);
 
 	function toggleShowMore() {
@@ -18,8 +20,10 @@
 	<section class="section" id="root-hero">
 		<div
 			id="root-hero-dimensional-bjorn-wrapper"
-			class="-z-5 h-[30vh] bg-transparent"
-		></div>
+			class="-z-5 h-[50vh] bg-transparent"
+		>
+			<DimensionalBjorn />
+		</div>
 		<p
 			id="root-hero-introduction"
 			class="block-stone-300 w-full px-1 py-3 text-center font-mono text-sm font-medium lg:w-4/5 lg:text-base"
