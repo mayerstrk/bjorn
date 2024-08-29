@@ -1,19 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
-
-	let DimensionalBjorn =
-		$state<
-			(typeof import('$lib/components/dimensional-bjorn.svelte'))['default']
-		>();
-
-	onMount(async () => {
-		if (browser) {
-			const module = await import('$lib/components/dimensional-bjorn.svelte');
-			DimensionalBjorn = module.default;
-		}
-	});
-
 	let showMore = $state(false);
 
 	function toggleShowMore() {
@@ -34,11 +19,7 @@
 		<div
 			id="root-hero-dimensional-bjorn-wrapper"
 			class="-z-5 h-[30vh] bg-transparent"
-		>
-			{#if browser && DimensionalBjorn}
-				<DimensionalBjorn />
-			{/if}
-		</div>
+		></div>
 		<p
 			id="root-hero-introduction"
 			class="block-stone-300 w-full px-1 py-3 text-center font-mono text-sm font-medium lg:w-4/5 lg:text-base"
