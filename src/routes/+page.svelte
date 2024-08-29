@@ -1,13 +1,20 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import DimensionalBjorn from '$lib/components/dimensional-bjorn.svelte';
+	import { browser } from '$app/environment';
+
+	let DimensionalBjorn =
+		$state<
+			(typeof import('$lib/components/dimensional-bjorn.svelte'))['default']
+		>();
+
+	onMount(async () => {
+		if (browser) {
+			const module = await import('$lib/components/dimensional-bjorn.svelte');
+			DimensionalBjorn = module.default;
+		}
+	});
 
 	let showMore = $state(false);
-	let mounted = $state(false);
-
-	onMount(() => {
-		mounted = true;
-	});
 
 	function toggleShowMore() {
 		showMore = !showMore;
@@ -28,7 +35,7 @@
 			id="root-hero-dimensional-bjorn-wrapper"
 			class="-z-5 h-[30vh] bg-transparent"
 		>
-			{#if mounted}
+			{#if browser && DimensionalBjorn}
 				<DimensionalBjorn />
 			{/if}
 		</div>
