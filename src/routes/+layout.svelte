@@ -1,19 +1,20 @@
 <script lang="ts">
 	import '../app.css';
-	import Nav from '$lib/components/nav.svelte';
+	import RootLayoutNav from '$lib/components/root-layout/root-layout-nav.svelte';
 </script>
 
-<div class="bg-yellow-200 py-1 text-center">Work in progress</div>
-<Nav />
+<RootLayoutNav />
 <page
-	id="root-layout-page"
-	class="scrollbar-hidden mx-auto flex h-full w-full min-w-[320px] max-w-screen-xl grow animate-fade-in flex-col px-5 text-stone-100 opacity-0"
+	class="scrollbar-hidden mx-auto flex w-full min-w-[320px] max-w-screen-xl grow basis-1 animate-fade-in flex-col overflow-scroll px-5 opacity-0"
 >
-	<main id="root-layout-main" class="relative flex w-full grow flex-col">
+	<div
+		id="root-layout__slot-wrapper"
+		class="relative flex w-full flex-col md:h-full md:min-h-0 md:flex-1 md:grow"
+	>
 		<slot />
-	</main>
-	<footer class="flex grow-0">
-		<p class="m-auto pb-3 text-xs text-gray-500 md:text-sm">
+	</div>
+	<footer class="relative flex flex-col">
+		<p class="font-semi pb-3 text-xs opacity-50 md:text-xs">
 			&copy; 2024 Mayer Starkman. All rights reserved.
 		</p>
 	</footer>

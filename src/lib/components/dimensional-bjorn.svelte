@@ -16,6 +16,7 @@
 	} from 'three';
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+	import { writable } from 'svelte/store';
 
 	let canvas: HTMLCanvasElement;
 	let isLoading = true;
@@ -26,7 +27,7 @@
 		ambientLightIntensity: 0.6,
 		directionalLightIntensity: 2.4,
 		directionalLightPosition: { x: -5, y: 70, z: 100 },
-		cameraPosition: { x: 200, y: 80, z: 0 },
+		cameraPosition: { x: 200, y: 100, z: 0 },
 		castShadow: true
 	};
 
@@ -40,7 +41,7 @@
 		const camera = new PerspectiveCamera(
 			75,
 			canvas.clientWidth / canvas.clientHeight,
-			0.1,
+			0.2,
 			1000
 		);
 
@@ -116,7 +117,7 @@
 				);
 				camera.lookAt(center);
 
-				pivot.rotation.y = Math.PI;
+				pivot.rotation.y = Math.PI + 1;
 
 				const controls = new OrbitControls(camera, renderer.domElement);
 				controls.enableDamping = true;
@@ -173,23 +174,22 @@
 	onMount(initThreeJS);
 </script>
 
-<div
-	class="flex h-full w-full items-center justify-center {!isLoading &&
-		'hidden'}"
->
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		width="24"
-		height="24"
-		viewBox="0 0 24 24"
-		fill="none"
-		stroke="currentColor"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-		class="lucide lucide-loader-circle animate-spin"
-	>
-		<path d="M21 12a9 9 0 1 1-6.219-8.56" />
-	</svg>
-</div>
+{#if isLoading}
+	<div class="flex h-full w-full items-center justify-center">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="lucide lucide-loader-circle animate-spin"
+		>
+			<path d="M21 12a9 9 0 1 1-6.219-8.56" />
+		</svg>
+	</div>
+{/if}
 <canvas bind:this={canvas} class="z-0 w-full"> </canvas>

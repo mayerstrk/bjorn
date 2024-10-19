@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="">
+<html class="h-full min-h-full" data-theme="dark">
 	<head>
 		<meta charset="utf-8" />
 		<title>Mayer Starkman | Developer Portfolio</title>
@@ -10,7 +10,10 @@
 		<meta name="author" content="Mayer Starkman" />
 
 		<!-- Open Graph Meta Tags -->
-		<meta property="og:title" content="Mayer Starkman | Developer Portfolio" />
+		<meta
+			property="og:title"
+			content="Mayer Starkman | mstark Developer Portfolio"
+		/>
 		<meta
 			property="og:description"
 			content="Developer portfolio of Mayer Starkman (mstark / mayerstrk), showcasing projects, skills, and experiences."
@@ -31,12 +34,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 		<link rel="preconnect" href="https://fonts.gstatic.com/" />
+
 		%sveltekit.head%
 	</head>
 	<body
 		role="document"
 		data-sveltekit-preload-data="hover"
-		class="flex h-full min-h-screen min-w-[320px] flex-col bg-[#2d3748] bg-gradient-to-b from-[#2d3748] from-10% to-red-400 bg-no-repeat font-mplus leading-loose"
+		class="gradient-background flex h-full min-w-[320px] flex-col overflow-hidden font-poppins text-sm leading-loose text-content md:text-base"
 	>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>

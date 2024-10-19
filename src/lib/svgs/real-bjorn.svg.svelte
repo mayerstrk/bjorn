@@ -7,7 +7,7 @@
 	y="0px"
 	viewBox="0 0 200 200"
 	style="enable-background:new 0 0 200 200;"
-	class="w-[40px] md:w-[80px]"
+	class="w-[40px] md:w-[90px]"
 	xml:space="preserve"
 	fill="white"
 	stroke="white"

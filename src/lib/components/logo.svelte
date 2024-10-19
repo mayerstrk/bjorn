@@ -1,13 +1,13 @@
 <script lang="ts">
 	import RealBjorn from '../svgs/real-bjorn.svg.svelte';
-	import MstarkSvg from '../svgs/mstark.svg.svelte';
+	import Mstark from '$lib/svgs/mstark.svg.svelte';
 </script>
 
 <div>
 	<a href="/" aria-label="Home">
-		<figure class="flex gap-2">
+		<figure class="flex gap-2" aria-label="Mstark">
 			<RealBjorn />
-			<MstarkSvg />
+			<Mstark />
 		</figure>
 	</a>
 </div>
