@@ -87,7 +87,7 @@
 		</a>
 		<button
 			type="button"
-			class="group relative size-9 rounded-full bg-transparent transition-all delay-100 duration-1000 hover:scale-150 hover:bg-accent-4 md:size-11"
+			class="group relative size-9 rounded-full bg-transparent transition-all delay-100 duration-1000 hover:bg-accent-4 md:size-11"
 			onclick={toggleTheme}
 		>
 			{#if theme === Theme.Default}
