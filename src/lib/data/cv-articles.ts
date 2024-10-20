@@ -14,11 +14,13 @@ export default [
 		place: 'SaaS Applications and Freelance',
 		timeRange: 'January 2024 – Present',
 		description: `
-      Worked on two SaaS projects with a couple of partners. We focus on making things 
-      easy for users and developers, improving performance, and making sure the 
-      apps work well across different platforms. I use React Remix, 
-      Svelte, and HTMX to build fast, efficient UIs while keeping state simple and as synced as possible by using SSR with the backend for your frontend concept with workers running V8 isolates on edge networks. Handled backend development 
-      with Actix and Go. Also completed some freelance gigs on the side.
+      Working on two SaaS projects with a couple of partners. We focus on making things 
+      easy for both users and developers, performance, and making sure the 
+      apps work well across different platforms. I use Rust with Actix Web and 
+      Go for the backend and React 19 RC with Remix, Svelte, and HTMX to build fast,
+      efficient UIs, keeping state simple and as synced as possible with the UI by using SSR with
+      the "backend for your frontend" architecure. We deploy on cloudfare workers which run
+      V8 isolates on cloudfare's edge network. Also completed some freelance gigs on the side.
     `,
 		tags: [
 			Tech.Typescript,
@@ -38,7 +40,7 @@ export default [
 		place: 'ITQ - Ministry of Defense Affiliated Program, Israel',
 		timeRange: 'March 2024 - August 2024',
 		description: `
-      I wanted to learn more about infrastructure so I spent 700 hours learning 
+      I wanted to learn more and practice infrastructure so I spent 700 hours learning 
       hands-on about a bunch of network technologies like VLANs, BGP, OSPF, and
       IPsec. Worked with things like routing, switching, and network security 
       emulating networks with GNS3, docker containers and VM technologies.
@@ -64,20 +66,24 @@ export default [
 		timeRange: 'February 2022 – January 2024',
 		description: `
       Opened a new department and led a new team that built two mobile 
-      and web apps from scratch - end to end. We worked on moving and 
-      organizing operations to a custom app interface we built which allows 
-      collection of data to perform analysis and derive insights. We would 
-      automate the creation of dashboards to promote data-driven decisions.
-      The apps are being used in production environments.
+      and web data driven apps from scratch - end to end. We worked 
+      on migrating operations to digital format to increase productivity,
+      ease supervision, and collect operational data. We would derive 
+      insights and display them on dashboards to enable adoptionnl of  
+      data-driven decision making. The apps are being used in production 
+      environments.
     `,
 		tags: [
 			Tech.Azure,
 			Tech.Typescript,
 			Tech.React,
 			Tech.ReactNative,
+			Tech.NodeJS,
+			Tech.Express,
 			Tech.Python,
 			Tech.Pandas,
-			Tech.D3
+			Tech.D3,
+			Tech.PowerPlatform
 		]
 	},
 	{
@@ -87,11 +93,11 @@ export default [
 		description: `
       I was promoted to Team Lead within 6 months of starting my service. Managed a team of
       20 people responsible for a large network and server setup. 
-      In my time there I planned and oversaw a building wide network infrastructure and 
-       work stations, making things much more stable and faster for 
-      over 400 devices - reducing the need for the large staff requirement. By the time I moved 
-      to the new department, the team consisted of 7 and we didn't have much to do. I'm
-      really proud of that :).
+      In my time there I planned and oversaw an overhaul of building wide network infrastructure
+      and over 400 work stations, making things much more stable and faster - reducing 
+      the need for the large staff requirements. By the time I moved to my new department and to date, 
+      the IT team consisted of just seven personel (less than 50% of where we started) and we didn't 
+      really have much to do. I'm really proud of that :).
     `,
 		tags: [
 			Tech.CiscoIOS,
