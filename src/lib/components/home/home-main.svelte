@@ -6,7 +6,9 @@
 <main
 	class="relative flex min-h-0 w-full flex-1 grow flex-col p-2 md:h-full md:w-1/2 md:p-4"
 >
-	<nav class="sticky inset-x-0 top-0 z-50 rounded-md p-2 backdrop-blur-md">
+	<nav
+		class="sticky inset-x-0 top-0 z-50 rounded-md p-2 backdrop-blur-md md:static md:inset-x-auto md:backdrop-blur-none"
+	>
 		<ul class="flex gap-2 text-sm italic text-accent-3">
 			<li class="mr-auto">
 				<a
