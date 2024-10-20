@@ -39,7 +39,8 @@ const config = {
 				'spin-slow': 'spin 25s ease-in-out infinite reverse',
 				'spin-fast': 'spin 0.2s linear infinite',
 				'fade-in-up': 'fade-in-up 1s ease forwards',
-				'fade-in': 'fade-in 1s ease forwards'
+				'fade-in': 'fade-in 1s ease forwards',
+				'ping-slower': 'ping 5s ease infinite'
 			},
 			fontFamily: {
 				mplus: ['mplus', 'sans-serif'],

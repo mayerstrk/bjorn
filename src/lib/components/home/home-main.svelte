@@ -3,16 +3,42 @@
 	import CvCard from '$lib/components/home/cv-card.svelte';
 </script>
 
-<main
-	class=" scrollbar-hidden relative flex min-h-0 w-full flex-1 flex-col gap-4 overflow-x-hidden p-2 md:h-full md:w-1/2 md:overflow-y-scroll md:p-4"
->
+<main class="flex min-h-0 w-full flex-1 flex-col p-2 md:h-full md:w-1/2 md:p-4">
 	<nav>
-		<ul>
-			<li></li>
-			<li></li>
+		<ul class="flex gap-2 text-sm italic text-accent-3 backdrop-blur-sm">
+			<li class="mr-auto">
+				<a
+					href="/mayer-starkman-resume.pdf"
+					download="mayer-starkman-resume.pdf"
+					class="group flex"
+				>
+					full resume
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-arrow-up-right transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-125"
+						><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg
+					>
+				</a>
+			</li>
+			<li>
+				<span class="italic">bio</span>
+			</li>
+			<li>
+				<span class="cursor-not-allowed text-gray-500">projects</span>
+			</li>
 		</ul>
 	</nav>
-	{#each cvArticles as cvArticle}
-		<CvCard {...cvArticle} />
-	{/each}
+	<article class="scrollbar-hidden flex-1 flex-col gap-4 overflow-y-auto">
+		{#each cvArticles as cvArticle}
+			<CvCard {...cvArticle} />
+		{/each}
+	</article>
 </main>
