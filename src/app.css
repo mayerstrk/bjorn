@@ -11,18 +11,18 @@
 		--color-accent1: 356deg 54% 54%;
 		--color-accent4: 288deg 95.8% 30.6%;
 		--color-accent3: 155deg 80% 50.2%;
-		--color-accent4: 45deg 100% 75%; /* Warm Yellow for subtle accents */
+		--color-accent4: 45deg 100% 75%;
 	}
 }
 
 :root[data-theme='light'] {
 	--color-bkg1: 14deg 79% 72%;
-	--color-bkg2: 60deg 53% 93%; /* Lighter Sky Blue at the bottom */
+	--color-bkg2: 60deg 53% 93%;
 	--color-content1: 210deg 20% 0%;
 	--color-content2: hsl210deg 5% 40%;
-	--color-accent1: 155deg 80% 50.2%; /* Soft Green for complementing accents */
-	--color-accent2: 210deg 60% 50%; /* Soft Blue for secondary accents */
-	--color-accent3: 356deg 54% 54%; /* Vibrant Pink for strong accents */
+	--color-accent1: 155deg 80% 50.2%;
+	--color-accent2: 210deg 60% 50%;
+	--color-accent3: 356deg 54% 54%;
 	--color-accent4: 0deg 0% 0%;
 }
 
@@ -31,11 +31,11 @@
 		--color-bkg1: 0deg 0% 0%;
 		--color-bkg2: 345deg 30% 36%;
 		--color-content1: 217deg 32.6% 98.5%;
-		--color-content2: 217deg 32.6% 17.5%;
-		--color-accent1: 290deg 100% 50.6%;
-		--color-accent2: 288deg 95.8% 30.6%;
+		--color-content2: 216deg 12% 62%;
+		--color-accent1: 356deg 54% 54%;
+		--color-accent4: 288deg 95.8% 30.6%;
 		--color-accent3: 155deg 80% 50.2%;
-		--color-accent4: 155deg 30% 40%;
+		--color-accent4: 45deg 100% 75%;
 	}
 }
 
