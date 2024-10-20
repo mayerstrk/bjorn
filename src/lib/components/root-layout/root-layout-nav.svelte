@@ -87,7 +87,7 @@
 		</a>
 		<button
 			type="button"
-			class="group relative size-9 rounded-full bg-transparent transition-all delay-100 duration-1000 hover:bg-accent-4 md:size-11"
+			class="group relative size-9 rounded-full bg-accent-4 transition-all delay-100 duration-1000 hover:scale-110 active:opacity-50 md:size-11"
 			onclick={toggleTheme}
 		>
 			{#if theme === Theme.Default}
@@ -101,7 +101,7 @@
 					stroke-width="1.5"
 					stroke-linecap="round"
 					stroke-linejoin="round"
-					class="lucide lucide-sun z-10 m-auto stroke-accent-3 transition-all duration-500 group-hover:stroke-accent-1"
+					class="lucide lucide-sun duration-50 z-10 m-auto stroke-accent-1 transition-all"
 					><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path
 						d="M12 20v2"
 					/><path d="m4.93 4.93 1.41 1.41" /><path
@@ -117,10 +117,10 @@
 					height="22"
 					viewBox="0 0 24 24"
 					fill="none"
-					stroke-width="1"
+					stroke-width="1.5"
 					stroke-linecap="round"
 					stroke-linejoin="round"
-					class="lucide lucide-moon z-10 m-auto stroke-accent-3 transition-all duration-500 group-hover:stroke-accent-1"
+					class="lucide lucide-moon z-10 m-auto stroke-accent-1 transition-all duration-500"
 					><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg
 				>
 			{/if}

@@ -12,7 +12,7 @@
 		<ul class="flex gap-2 text-sm italic text-accent-3">
 			<li class="mr-auto">
 				<a
-					href="/mayer-starkman-resume.pdf"
+					href="/mayer-starkman-flores-resume.pdf"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="group flex"
