@@ -17,7 +17,7 @@ export default [
       Working on two SaaS projects with a couple of partners. We focus on making things 
       easy for both users and developers, performance, and making sure the 
       apps work well across different platforms. I use Rust with Actix Web and 
-      Go for the backend and React 19 RC with Remix, Svelte, and HTMX to build fast,
+      Go for the backend and React with Remix, Svelte, and HTMX to build fast,
       efficient UIs, keeping state simple and as synced as possible with the UI by using SSR with
       the "backend for your frontend" architecure. We deploy on cloudfare workers which run
       V8 isolates on cloudfare's edge network. Also completed some freelance gigs on the side.
