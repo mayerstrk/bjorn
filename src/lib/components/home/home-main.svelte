@@ -4,10 +4,10 @@
 </script>
 
 <main
-	class="flex min-h-0 w-full flex-1 grow flex-col gap-2 p-2 md:h-full md:w-1/2 md:p-4"
+	class="relative flex min-h-0 w-full flex-1 grow flex-col p-2 md:h-full md:w-1/2 md:p-4"
 >
-	<nav>
-		<ul class="flex gap-2 text-sm italic text-accent-3 backdrop-blur-sm">
+	<nav class="sticky inset-x-0 top-0 z-50 rounded-md p-2 backdrop-blur-md">
+		<ul class="flex gap-2 text-sm italic text-accent-3">
 			<li class="mr-auto">
 				<a
 					href="/mayer-starkman-resume.pdf"
@@ -39,7 +39,7 @@
 			</li>
 		</ul>
 	</nav>
-	<article class="scrollbar-hidden flex-1 flex-col gap-4 overflow-y-auto">
+	<article class="scrollbar-hidden z-40 flex-1 flex-col gap-4 overflow-y-auto">
 		{#each cvArticles as cvArticle}
 			<CvCard {...cvArticle} />
 		{/each}
