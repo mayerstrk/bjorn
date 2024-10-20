@@ -3,7 +3,9 @@
 	import CvCard from '$lib/components/home/cv-card.svelte';
 </script>
 
-<main class="flex min-h-0 w-full flex-1 flex-col p-2 md:h-full md:w-1/2 md:p-4">
+<main
+	class="flex min-h-0 w-full flex-1 grow flex-col gap-2 p-2 md:h-full md:w-1/2 md:p-4"
+>
 	<nav>
 		<ul class="flex gap-2 text-sm italic text-accent-3 backdrop-blur-sm">
 			<li class="mr-auto">

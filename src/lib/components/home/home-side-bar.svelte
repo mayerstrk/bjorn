@@ -3,7 +3,7 @@
 </script>
 
 <aside
-	class="scrollbar-hidden h-full w-full p-2 md:w-1/2 md:overflow-y-scroll md:p-6"
+	class="scrollbar-hidden w-full p-2 md:h-full md:w-1/2 md:overflow-y-scroll md:p-6"
 >
 	<section id="home-hero" class="flex h-full flex-col">
 		<div
