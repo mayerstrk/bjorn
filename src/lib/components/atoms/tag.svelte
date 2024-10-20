@@ -1,6 +1,5 @@
 <script lang="ts">
 	let { tech } = $props();
-	console.log(JSON.stringify(tech));
 </script>
 
 <span

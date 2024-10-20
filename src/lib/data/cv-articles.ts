@@ -69,7 +69,7 @@ export default [
       and web data driven apps from scratch - end to end. We worked 
       on migrating operations to digital format to increase productivity,
       ease supervision, and collect operational data. We would derive 
-      insights and display them on dashboards to enable adoptionnl of  
+      insights and display them on dashboards to enable adoption of  
       data-driven decision making. The apps are being used in production 
       environments.
     `,

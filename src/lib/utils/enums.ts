@@ -10,6 +10,11 @@ const enum DimensionalBjornMode {
 	box
 }
 
+const enum Theme {
+	Default = 'dark',
+	Light = 'light'
+}
+
 const enum Tech {
 	Typescript = 'TypeScript',
 	Svelte = 'Svelte',
@@ -56,4 +61,4 @@ const enum Tech {
 	Physics = 'Physics'
 }
 
-export { Breakpoint, DimensionalBjornMode, Tech };
+export { Breakpoint, DimensionalBjornMode, Theme, Tech };

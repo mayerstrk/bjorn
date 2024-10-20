@@ -10,7 +10,7 @@
 			id="home-hero-title"
 			class="items-middle flex w-full flex-col md:w-auto"
 		>
-			<h1 class="font font-poppins text-4xl leading-tight md:font-normal">
+			<h1 class="font-poppins text-4xl leading-tight md:font-normal">
 				Mayer Starkman Flores
 			</h1>
 			<h2>Senior Full Stack Engineer</h2>
@@ -19,10 +19,11 @@
 			<div class="h-[30vh] w-full bg-transparent">
 				<DimensionalBjorn />
 			</div>
-			<p class="max-w-[900px] py-2 text-sm leading-loose text-gray-400">
+			<p class="max-w-[900px] py-2 text-sm leading-loose text-content-2">
 				I design and build high-performance websites and applications, focusing
-				on fun user experiences and creating development environments that boost
-				productivity and inspire creativity.
+				on serving enjoyable user experiences and creating development
+				environments that boost productivity and inspire creativity (I use vim
+				btw).
 			</p>
 		</div>
 	</section>

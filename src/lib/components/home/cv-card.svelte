@@ -6,15 +6,13 @@
 </script>
 
 <div
-	class="disabled:hover group relative flex flex-col gap-4 rounded-lg p-6 transition-all duration-500 hover:bg-white/5"
+	class="group relative flex flex-col gap-4 rounded-lg p-6 transition-all duration-500 hover:bg-content-1/5"
 >
-	<div class=" flexflex-column">
+	<div class=" flex flex-col">
 		<div class="flex items-center justify-between">
-			<span class="text-sm text-gray-400">{timeRange}</span>
+			<span class="text-sm text-content-2">{timeRange}</span>
 		</div>
-		<h3
-			class=" text-mplus text-lg transition-all duration-500 group-hover:text-accent-3"
-		>
+		<h3 class="text-lg transition-all duration-500 group-hover:text-accent-3">
 			{role}
 		</h3>
 		<p class="text-xs transition-all duration-500 group-hover:text-accent-3">
@@ -22,7 +20,7 @@
 		</p>
 	</div>
 
-	<p class="text-sm text-gray-400">{description}</p>
+	<p class="text-sm text-content-2">{description}</p>
 
 	<div class="mt-4 flex flex-wrap gap-2">
 		{#each tags as tech}
