@@ -28,7 +28,7 @@
 <nav
 	bind:offsetHeight={navOffsetHeight}
 	id="root-layout-nav"
-	class={`sticky top-0 z-50 m-auto flex w-full max-w-screen-2xl items-center justify-between p-5 backdrop-blur-md`}
+	class={`sticky top-0 z-50 m-auto flex w-full max-w-screen-2xl items-center justify-between p-5`}
 >
 	{#if isMobileNavModalOpen}
 		<div
@@ -98,7 +98,7 @@
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="black"
-					stroke-width="2"
+					stroke-width="1.5"
 					stroke-linecap="round"
 					stroke-linejoin="round"
 					class="lucide lucide-sun z-10 m-auto stroke-accent-3 transition-all duration-500 group-hover:stroke-accent-1"
@@ -113,11 +113,11 @@
 			{:else}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
+					width="22"
+					height="22"
 					viewBox="0 0 24 24"
 					fill="none"
-					stroke-width="2"
+					stroke-width="1"
 					stroke-linecap="round"
 					stroke-linejoin="round"
 					class="lucide lucide-moon z-10 m-auto stroke-accent-3 transition-all duration-500 group-hover:stroke-accent-1"
@@ -136,10 +136,10 @@
 				height="22"
 				viewBox="0 0 24 24"
 				fill="none"
-				stroke-width="2"
+				stroke-width="1.5"
 				stroke-linecap="round"
 				stroke-linejoin="round"
-				class="lucide lucide-menu m-auto stroke-content-1 transition-all hover:size-[24px]"
+				class="lucide lucide-menu m-auto stroke-white transition-all hover:size-[24px] hover:stroke-accent-3"
 				><line x1="4" x2="20" y1="12" y2="12" /><line
 					x1="4"
 					x2="20"
