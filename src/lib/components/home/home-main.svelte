@@ -11,7 +11,8 @@
 			<li class="mr-auto">
 				<a
 					href="/mayer-starkman-resume.pdf"
-					download="mayer-starkman-resume.pdf"
+					target="_blank"
+					rel="noopener noreferrer"
 					class="group flex"
 				>
 					full resume
