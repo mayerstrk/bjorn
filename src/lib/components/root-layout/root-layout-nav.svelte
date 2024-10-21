@@ -90,7 +90,7 @@
 			class="group relative size-11 rounded-full bg-accent-4 transition-all hover:scale-110 active:opacity-50 md:size-11"
 			onclick={toggleTheme}
 		>
-			{#if theme === Theme.Default}
+			{#if theme === Theme.Dark}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="22"
