@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { untrack } from 'svelte';
 	import { page } from '$app/stores';
 	import Logo from '$lib/components/logo.svelte';
 	import { fade } from 'svelte/transition';
 	import { Theme } from '$lib/utils/enums';
-
-	let theme = $state(Theme.Default);
 
 	let navOffsetHeight = $state(120);
 	let isMobileNavModalOpen = $state(false);
@@ -13,38 +13,53 @@
 		isMobileNavModalOpen = !isMobileNavModalOpen;
 	};
 
-	const toggleTheme = () => {
-		let currentTheme = document.documentElement.getAttribute('data-theme');
-		if (!currentTheme) {
-			console.warn(
-				'Failed to get theme attribute, using last fetched theme as default. This might cause issues.'
-			);
-			currentTheme = theme;
+	let theme = $state('');
+
+	function toggleTheme() {
+		theme = theme === Theme.Dark ? Theme.Light : Theme.Dark;
+		if (browser) {
+			document.documentElement.setAttribute('data-theme', theme);
 		}
-		document.documentElement.setAttribute('data-theme', theme);
-	};
+	}
 
 	$effect(() => {
-		const prefersDark =
-			window.matchMedia &&
-			window.matchMedia('(prefers-color-scheme: dark)').matches;
-		const defaultTheme = prefersDark ? Theme.Dark : Theme.Default;
-		document.documentElement.setAttribute('data-theme', defaultTheme);
-		theme = defaultTheme;
+		if (browser) {
+			untrack(() => {
+				const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+				const handleMediaChange = (event: MediaQueryListEvent) => {
+					theme = event.matches ? Theme.Dark : Theme.Light;
+				};
+
+				mediaQuery.addEventListener('change', handleMediaChange);
+
+				theme = mediaQuery.matches ? Theme.Dark : Theme.Light;
+
+				return () => {
+					mediaQuery.removeEventListener('change', handleMediaChange);
+				};
+			});
+		}
+	});
+
+	$effect(() => {
+		if (browser) {
+			document.documentElement.setAttribute('data-theme', theme);
+		}
 	});
 </script>
 
 <nav
 	bind:offsetHeight={navOffsetHeight}
 	id="root-layout-nav"
-	class={`sticky top-0 z-50 m-auto flex w-full max-w-screen-2xl items-center justify-between p-5`}
+	class="sticky top-0 z-50 m-auto flex w-full max-w-screen-2xl items-center justify-between p-5"
 >
 	{#if isMobileNavModalOpen}
 		<div
 			transition:fade={{ duration: 300 }}
 			id="root-layout-nav-modal"
 			style={`top: ${navOffsetHeight}px`}
-			class={`absolute right-5 flex items-center rounded-lg bg-black bg-opacity-60 p-5 text-sm leading-loose text-white transition-all ease-in-out`}
+			class="absolute right-5 flex items-center rounded-lg bg-black bg-opacity-60 p-5 text-sm leading-loose text-white transition-all ease-in-out"
 		>
 			<nav id="root-layout-nav-mobile-modal-nav">
 				<ul class="flex flex-col gap-4">
@@ -52,8 +67,10 @@
 						<a
 							href="/"
 							class:active-route={$page.url.pathname === '/'}
-							class="w-full">Home</a
+							class="w-full"
 						>
+							Home
+						</a>
 					</li>
 					<li>
 						<a
@@ -96,10 +113,11 @@
 		</a>
 		<button
 			type="button"
-			class="group relative size-11 rounded-full bg-accent-4 transition-all hover:scale-110 active:opacity-50 md:size-11"
+			class="group relative size-11 rounded-full bg-accent-4 transition-all hover:scale-110 active:opacity-50 disabled:animate-ping-slower disabled:cursor-not-allowed disabled:bg-white/30 md:size-11"
 			onclick={toggleTheme}
+			disabled={!theme}
 		>
-			{#if theme === Theme.Dark}
+			{#if theme && theme === Theme.Dark}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="22"
@@ -119,7 +137,7 @@
 						d="m6.34 17.66-1.41 1.41"
 					/><path d="m19.07 4.93-1.41 1.41" /></svg
 				>
-			{:else}
+			{:else if theme && theme === Theme.Light}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="22"

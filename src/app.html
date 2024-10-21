@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="h-full min-h-full" data-theme="light">
+<html lang="en" class="h-full min-h-full" data-theme="">
 	<head>
 		<meta charset="utf-8" />
 		<title>Mayer Starkman | Developer Portfolio</title>
@@ -10,7 +10,7 @@
 		<meta name="author" content="Mayer Starkman" />
 
 		<!-- Open Graph Meta Tags -->
-		<meta
+		<metg
 			property="og:title"
 			content="Mayer Starkman | mstark Developer Portfolio"
 		/>
@@ -43,5 +43,14 @@
 		class="gradient-background flex h-full min-w-[320px] flex-col overflow-hidden font-poppins text-sm leading-loose text-content-1 md:text-base"
 	>
 		<div style="display: contents">%sveltekit.body%</div>
+		<script>
+			(function () {
+				const prefersDarkMode = window.matchMedia(
+					'(prefers-color-scheme: dark)'
+				).matches;
+				const theme = prefersDarkMode ? 'dark' : 'light';
+				document.documentElement.setAttribute('data-theme', theme);
+			})();
+		</script>
 	</body>
 </html>
