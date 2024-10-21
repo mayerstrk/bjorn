@@ -14,14 +14,23 @@
 	};
 
 	const toggleTheme = () => {
-		theme = theme === Theme.Default ? Theme.Dark : Theme.Default;
+		let currentTheme = document.documentElement.getAttribute('data-theme');
+		if (!currentTheme) {
+			console.warn(
+				'Failed to get theme attribute, using last fetched theme as default. This might cause issues.'
+			);
+			currentTheme = theme;
+		}
 		document.documentElement.setAttribute('data-theme', theme);
 	};
 
 	$effect(() => {
-		theme =
-			(document.documentElement.getAttribute('data-theme') as Theme) ||
-			Theme.Default;
+		const prefersDark =
+			window.matchMedia &&
+			window.matchMedia('(prefers-color-scheme: dark)').matches;
+		const defaultTheme = prefersDark ? Theme.Dark : Theme.Default;
+		document.documentElement.setAttribute('data-theme', defaultTheme);
+		theme = defaultTheme;
 	});
 </script>
 
