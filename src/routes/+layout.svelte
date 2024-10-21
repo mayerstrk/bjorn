@@ -1,8 +1,6 @@
 <script lang="ts">
 	import '../app.css';
 	import RootLayoutNav from '$lib/components/root-layout/root-layout-nav.svelte';
-
-	const { children } = $props();
 </script>
 
 <RootLayoutNav />
@@ -13,7 +11,7 @@
 		id="root-layout__slot-wrapper"
 		class="relative flex w-full flex-col md:h-full md:min-h-0 md:flex-1 md:grow"
 	>
-		{@render children()}
+		<slot />
 	</div>
 	<footer class="relative flex flex-col">
 		<p class="font-semi pb-3 text-xs opacity-50 md:text-xs">

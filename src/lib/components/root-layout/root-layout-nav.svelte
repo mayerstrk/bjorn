@@ -13,6 +13,23 @@
 		isMobileNavModalOpen = !isMobileNavModalOpen;
 	};
 
+	let modalElement = $state<HTMLElement>();
+
+	$effect(() => {
+		if (browser && isMobileNavModalOpen) {
+			const handleClickOutside = (event: MouseEvent) => {
+				if (modalElement && !modalElement.contains(event.target as Node)) {
+					toggleisMobileNavModalOpen();
+				}
+			};
+			document.addEventListener('click', handleClickOutside);
+
+			return () => {
+				document.removeEventListener('click', handleClickOutside);
+			};
+		}
+	});
+
 	let theme = $state('');
 
 	function toggleTheme() {
@@ -56,10 +73,12 @@
 >
 	{#if isMobileNavModalOpen}
 		<div
+			bind:this={modalElement}
 			transition:fade={{ duration: 300 }}
 			id="root-layout-nav-modal"
 			style={`top: ${navOffsetHeight}px`}
-			class="absolute right-5 flex items-center rounded-lg bg-black bg-opacity-60 p-5 text-sm leading-loose text-white transition-all ease-in-out"
+			class="absolute right-5 flex items-center rounded-lg bg-black bg-opacity-60
+			p-5 text-sm leading-loose text-white transition-all ease-in-out"
 		>
 			<nav id="root-layout-nav-mobile-modal-nav">
 				<ul class="flex flex-col gap-4">
@@ -155,7 +174,10 @@
 		<button
 			type="button"
 			class="size-9 rounded-md md:size-11"
-			onclick={toggleisMobileNavModalOpen}
+			onclick={(e) => {
+				e.stopPropagation();
+				toggleisMobileNavModalOpen();
+			}}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
