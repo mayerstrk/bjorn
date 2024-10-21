@@ -29,7 +29,7 @@
 @media (prefers-color-scheme: dark) {
 	:root {
 		--color-bkg1: 210deg 20% 0%;
-		--color-bkg2: 345deg 30% 45%;
+		--color-bkg2: 345deg 45% 45%;
 		--color-content1: 217deg 32.6% 98.5%;
 		--color-content2: 216deg 12% 75%;
 		--color-accent1: 356deg 54% 54%;
