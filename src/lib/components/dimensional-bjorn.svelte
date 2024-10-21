@@ -16,7 +16,6 @@
 	} from 'three';
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-	import { writable } from 'svelte/store';
 
 	let canvas: HTMLCanvasElement;
 	let isLoading = true;
@@ -192,4 +191,4 @@
 		</svg>
 	</div>
 {/if}
-<canvas bind:this={canvas} class="z-0 w-full"> </canvas>
+<canvas bind:this={canvas} class="z-0 h-full w-full"> </canvas>

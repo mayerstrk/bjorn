@@ -4,7 +4,7 @@
 	import { fade } from 'svelte/transition';
 	import { Theme } from '$lib/utils/enums';
 
-	let theme = $state(Theme.Light);
+	let theme = $state(Theme.Default);
 
 	let navOffsetHeight = $state(120);
 	let isMobileNavModalOpen = $state(false);
@@ -14,7 +14,7 @@
 	};
 
 	const toggleTheme = () => {
-		theme = theme === Theme.Default ? Theme.Light : Theme.Default;
+		theme = theme === Theme.Default ? Theme.Dark : Theme.Default;
 		document.documentElement.setAttribute('data-theme', theme);
 	};
 
@@ -87,7 +87,7 @@
 		</a>
 		<button
 			type="button"
-			class="group relative size-9 rounded-full bg-accent-4 transition-all delay-100 duration-1000 hover:scale-110 active:opacity-50 md:size-11"
+			class="group relative size-11 rounded-full bg-accent-4 transition-all hover:scale-110 active:opacity-50 md:size-11"
 			onclick={toggleTheme}
 		>
 			{#if theme === Theme.Default}

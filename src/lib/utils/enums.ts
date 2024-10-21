@@ -11,8 +11,8 @@ const enum DimensionalBjornMode {
 }
 
 const enum Theme {
-	Default = '',
-	Light = 'light'
+	Default = 'light',
+	Dark = 'dark'
 }
 
 const enum Tech {
