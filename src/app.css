@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer {
+@layer base {
 	:root {
 		--color-bkg1: 14deg 79% 72%; /* default light theme */
 		--color-bkg2: 60deg 53% 93%;
+		--color-bkg3: 14deg 79% 75%;
 		--color-content1: 210deg 20% 0%;
-		--color-content2: hsl210deg 5% 40%;
+		--color-content2: 210deg 5% 40%;
 		--color-accent1: 155deg 80% 50.2%;
 		--color-accent2: 45deg 100% 75%;
 		--color-accent3: 356deg 54% 54%;
@@ -16,48 +17,67 @@
 	:root[data-theme='light'] {
 		--color-bkg1: 14deg 79% 72%;
 		--color-bkg2: 60deg 53% 93%;
+		--color-bkg3: 14deg 79% 80%;
 		--color-content1: 210deg 20% 0%;
-		--color-content2: hsl210deg 5% 40%;
-		--color-accent1: 155deg 80% 50.2%;
+		--color-content2: 210deg 5% 30%;
+		--color-accent1: 0deg 60% 50%;
 		--color-accent2: 45deg 100% 75%;
-		--color-accent3: 356deg 54% 54%;
-		--color-accent4: 0deg 0% 0%;
+		--color-accent3: 0deg 0% 0%;
+		--color-accent4: 155deg 80% 50.2%;
 	}
 
 	:root[data-theme='dark'] {
 		--color-bkg1: 210deg 20% 0%;
 		--color-bkg2: 345deg 45% 45%;
+		--color-bkg3: 210deg 20% 5%;
 		--color-content1: 217deg 32.6% 98.5%;
 		--color-content2: 216deg 12% 75%;
-		--color-accent1: 356deg 54% 54%;
-		--color-accent3: 155deg 80% 50.2%;
-		--color-accent4: 45deg 100% 75%;
-	}
-}
-
-@media (prefers-color-scheme: light) {
-	:root:not([data-theme]) {
-		--color-bkg1: 14deg 79% 72%;
-		--color-bkg2: 60deg 53% 93%;
-		--color-content1: 210deg 20% 0%;
-		--color-content2: hsl210deg 5% 40%;
+		--color-content3: 155deg 80% 50.2%;
 		--color-accent1: 155deg 80% 50.2%;
-		--color-accent2: 45deg 100% 75%;
-		--color-accent3: 356deg 54% 54%;
-		--color-accent4: 0deg 0% 0%;
+		--color-accent3: 45deg 100% 75%;
+		--color-accent4: 356deg 54% 54%;
+	}
+
+	@media (prefers-color-scheme: light) {
+		:root:not([data-theme]) {
+			--color-bkg1: 14deg 79% 72%;
+			--color-bkg2: 60deg 53% 93%;
+			--color-bkg3: 155deg 80% 50.2%;
+			--color-content1: 210deg 20% 0%;
+			--color-content2: 210deg 5% 20%;
+			--color-accent1: 155deg 80% 50.2%;
+			--color-accent2: 45deg 100% 75%;
+			--color-accent3: 356deg 54% 54%;
+			--color-accent4: 0deg 0% 0%;
+		}
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme]) {
+			--color-bkg1: 210deg 20% 0%;
+			--color-bkg2: 345deg 45% 45%;
+			--color-bkg3: 210deg 20% 5%;
+			--color-content1: 217deg 32.6% 98.5%;
+			--color-content2: 216deg 12% 75%;
+			--color-accent1: 356deg 54% 54%;
+			--color-accent3: 155deg 80% 50.2%;
+			--color-accent4: 45deg 100% 75%;
+		}
 	}
 }
 
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme]) {
-		--color-bkg1: 210deg 20% 0%;
-		--color-bkg2: 345deg 45% 45%;
-		--color-content1: 217deg 32.6% 98.5%;
-		--color-content2: 216deg 12% 75%;
-		--color-accent1: 356deg 54% 54%;
-		--color-accent3: 155deg 80% 50.2%;
-		--color-accent4: 45deg 100% 75%;
+@layer utilities {
+	.scrollbar-hidden {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+		&::-webkit-scrollbar {
+			display: none; /* Chrome, Safari, Opera */
+		}
 	}
+}
+
+.gradient-background {
+	@apply bg-gradient-to-b from-bkg-1 to-bkg-2;
 }
 
 /* latin-ext */
@@ -515,125 +535,4 @@
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
 		U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
 		U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@layer utilities {
-	.scrollbar-hidden {
-		-ms-overflow-style: none; /* IE and Edge */
-		scrollbar-width: none; /* Firefox */
-		&::-webkit-scrollbar {
-			display: none; /* Chrome, Safari, Opera */
-		}
-	}
-
-	.code-line-pink {
-		@apply w-fit rounded border-b-2 border-red-400 bg-red-200 px-2 py-1 font-mono leading-tight text-pink-700;
-	}
-
-	.block-stone-300 {
-		@apply m-auto rounded-s bg-stone-300 bg-opacity-10;
-	}
-
-	.indent-1 {
-		margin-left: 2rem;
-	}
-
-	.animation-dalay-500 {
-		animation-delay: 0.5s;
-	}
-
-	.animation-delay-1000 {
-		animation-delay: 1s;
-	}
-
-	.animation-delay-1500 {
-		animation-delay: 1.5s;
-	}
-
-	.animation-delay-2000 {
-		animation-delay: 2s;
-	}
-
-	.animation-delay-4000 {
-		animation-delay: 4s;
-	}
-}
-
-.gradient-background {
-	@apply bg-gradient-to-b from-bkg-1 to-bkg-2;
-}
-
-.blur-circles-background {
-	@apply relative min-h-screen overflow-hidden bg-bkg-1 text-content-1; /* Ensure the element is relatively positioned and has minimum screen height */
-}
-
-.blur-circles-background::before,
-.blur-circles-background::after {
-	@apply absolute -z-10 rounded-full blur-3xl content-[''];
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%); /* Center the elements */
-}
-
-.blur-circles-background::before {
-	@apply animate-float-1 aspect-square h-3/4 bg-accent-2/20;
-}
-
-.blur-circles-background::after {
-	@apply animate-float-2 aspect-square h-1/2 bg-accent-1/20;
-}
-
-@keyframes float-2 {
-	0% {
-		transform: translate(-50%, -50%) translate(0%, 0%) scale(1) rotate(0deg);
-	}
-	20% {
-		transform: translate(-50%, -50%) translate(5%, -5%) scale(1.05)
-			rotate(10deg);
-	}
-	40% {
-		transform: translate(-50%, -50%) translate(10%, -10%) scale(1.1)
-			rotate(20deg);
-	}
-	60% {
-		transform: translate(-50%, -50%) translate(5%, 5%) scale(1.05)
-			rotate(-10deg);
-	}
-	80% {
-		transform: translate(-50%, -50%) translate(0%, 0%) scale(1) rotate(-5deg);
-	}
-	100% {
-		transform: translate(-50%, -50%) translate(0%, 0%) scale(1) rotate(0deg);
-	}
-}
-@keyframes float-1 {
-	0%,
-	100% {
-		transform: translate(-50%, -50%) translate(10%, 10%) scale(1) rotate(0deg);
-	}
-	20% {
-		transform: translate(-50%, -50%) translate(-10%, 20%) scale(1.1)
-			rotate(-8deg);
-	}
-	40% {
-		transform: translate(-50%, -50%) translate(-20%, -10%) scale(0.9)
-			rotate(-20deg);
-	}
-	60% {
-		transform: translate(-50%, -50%) translate(15%, -15%) scale(1.05)
-			rotate(15deg);
-	}
-	80% {
-		transform: translate(-50%, -50%) translate(5%, 10%) scale(1) rotate(5deg);
-	}
-}
-
-/* Utility classes for animations */
-@layer utilities {
-	.animate-float-1 {
-		animation: float-1 25s linear infinite;
-	}
-	.animate-float-2 {
-		animation: float-2 28s linear infinite;
-	}
 }

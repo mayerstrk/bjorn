@@ -3,7 +3,7 @@ import type { Config } from 'tailwindcss';
 const config = {
 	darkMode: 'selector',
 	lightMode: 'selector',
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+	content: ['./app.html', './src/**/*.{html,js,svelte,ts}'],
 	future: {
 		hoverOnlyWhenSupported: true
 	},
@@ -31,12 +31,17 @@ const config = {
 				},
 				bkg: {
 					1: 'hsl(var(--color-bkg1) / <alpha-value>)',
-					2: 'hsl(var(--color-bkg2) / <alpha-value>)'
+					2: 'hsl(var(--color-bkg2) / <alpha-value>)',
+					3: 'hsl(var(--color-bkg3) / <alpha-value>)'
 				},
 				content: {
 					1: 'hsl(var(--color-content1) / <alpha-value>)',
-					2: 'hsl(var(--color-content2) / <alpha-value>)'
+					2: 'hsl(var(--color-content2) / <alpha-value>)',
+					3: 'hsl(var(--color-content3) / <alpha-value>)'
 				}
+			},
+			willChange: {
+				blur: 'backdrop-blur'
 			},
 			animation: {
 				'spin-slower': 'spin 35s ease infinite',

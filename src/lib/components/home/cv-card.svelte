@@ -12,10 +12,10 @@
 		<div class="flex items-center justify-between">
 			<span class="text-sm text-content-2">{timeRange}</span>
 		</div>
-		<h3 class="text-lg transition-all duration-500 group-hover:text-accent-3">
+		<h3 class="text-lg transition-all duration-500 group-hover:text-accent-1">
 			{role}
 		</h3>
-		<p class="text-xs transition-all duration-500 group-hover:text-accent-3">
+		<p class="text-xs transition-all duration-500 group-hover:text-accent-1">
 			{place}
 		</p>
 	</div>
