@@ -7,7 +7,7 @@
 	class="relative flex min-h-0 w-full flex-1 grow flex-col p-2 md:h-full md:w-1/2 md:p-4"
 >
 	<nav
-		class="sticky top-0 z-10 flex w-full max-w-screen-2xl rounded-md bg-bkg-3/30 p-2 px-5 backdrop-blur-sm"
+		class="sticky top-0 z-10 flex w-full max-w-screen-2xl rounded-md bg-bkg-1/40 p-2 px-5 backdrop-blur-sm"
 	>
 		<ul class="flex w-full gap-2 text-sm italic text-accent-1">
 			<li class="font-medium">
