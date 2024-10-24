@@ -58,7 +58,7 @@
 </script>
 
 <div
-	class="relative my-10 flex w-full flex-col gap-2 overflow-x-clip rounded-lg bg-white/5 p-2 md:my-0 md:mt-auto"
+	class="relative my-10 flex w-full flex-col gap-2 overflow-x-clip rounded-lg bg-white/5 p-4 py-10 md:mt-auto md:py-0"
 	id="{parentComponentName}-tech-stack"
 >
 	<ul class="tech-grid">
@@ -68,7 +68,11 @@
 				class="tooltip m-auto p-1"
 			>
 				<tech.component sizeClass="size-6" />
-				<span class="tooltiptext">{tech.name}</span>
+				<span
+					class="tooltiptext bg-accent-1/60 backdrop-blur-sm after:border-x-transparent after:border-b-transparent after:border-t-accent-1/60"
+				>
+					{tech.name}
+				</span>
 			</li>
 		{/each}
 	</ul>
@@ -79,7 +83,10 @@
 				class="tooltip m-auto p-1"
 			>
 				<tech.component sizeClass="size-6" />
-				<span class="tooltiptext">{tech.name}</span>
+				<span
+					class="tooltiptext bg-accent-1/60 backdrop-blur-sm after:border-x-transparent after:border-b-transparent after:border-t-accent-1/60"
+					>{tech.name}</span
+				>
 			</li>
 		{/each}
 	</ul>
@@ -99,19 +106,17 @@
 	}
 
 	.tooltiptext {
+		text-wrap: nowrap;
 		visibility: hidden;
-		width: 120px;
-		background-color: #333;
 		font-size: 12px;
 		color: #fff;
 		text-align: center;
 		border-radius: 4px;
-		padding: 2px 2px;
+		padding: 2px 5px;
 		position: absolute;
 		z-index: 1;
+		transform: translateX(-20%);
 		bottom: 125%;
-		left: 50%;
-		margin-left: -60px;
 		opacity: 0;
 		transition: opacity 0.3s;
 	}
@@ -129,6 +134,5 @@
 		margin-left: -5px;
 		border-width: 5px;
 		border-style: solid;
-		border-color: #333 transparent transparent transparent;
 	}
 </style>
