@@ -4,13 +4,13 @@
 </script>
 
 <main
-	class="relative flex min-h-0 w-full flex-1 grow flex-col p-2 md:h-full md:w-1/2 md:p-4"
+	class="flex min-h-0 w-full flex-1 grow flex-col overflow-y-auto p-2 md:w-1/2 md:grow md:p-4"
 >
 	<nav
 		class="sticky top-0 z-10 flex w-full max-w-screen-2xl rounded-md bg-bkg-1/40 p-2 px-5 backdrop-blur-sm"
 	>
 		<ul class="flex w-full gap-2 text-sm italic text-accent-1">
-			<li class="font-medium">
+			<li class="font-medium md:font-normal">
 				<a
 					href="/mayer-starkman-flores-resume-one-page.pdf"
 					target="_blank"

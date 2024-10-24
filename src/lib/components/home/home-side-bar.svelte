@@ -1,9 +1,10 @@
 <script lang="ts">
 	import DimensionalBjorn from '$lib/components/dimensional-bjorn.svelte';
+	import TechStackList from '$lib/components/tech-stack-list.svelte';
 </script>
 
 <aside
-	class="scrollbar-hidden w-full p-2 md:h-full md:w-1/2 md:overflow-y-scroll md:p-6"
+	class="scrollbar-hidden w-full p-2 md:min-h-full md:w-1/2 md:overflow-y-scroll md:p-6"
 >
 	<section id="home-hero" class="flex h-full flex-col">
 		<div
@@ -15,7 +16,7 @@
 			</h1>
 			<h2>Senior Full Stack Engineer</h2>
 		</div>
-		<div id="home-hero-content" class="grow">
+		<div id="home-hero-content" class=" flex grow flex-col">
 			<div class="h-[30vh] w-full bg-transparent">
 				<DimensionalBjorn />
 			</div>
@@ -25,6 +26,7 @@
 				environments that boost productivity and inspire creativity (I use vim
 				btw).
 			</p>
+			<TechStackList parentComponentName="home-hero" />
 		</div>
 	</section>
 </aside>

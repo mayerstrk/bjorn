@@ -16,10 +16,18 @@ const enum Theme {
 }
 
 const enum Tech {
+	Neovim = 'Neovim',
+	Nginx = 'NGINX',
+	Redux = 'Redux',
+	Lua = 'Lua',
+	PopOs = 'Pop!_OS',
 	Typescript = 'TypeScript',
 	Svelte = 'Svelte',
+	Zustand = 'Zustand',
 	Remix = 'Remix',
+	Tailwind = 'Taliwind',
 	React = 'React',
+	ReactRouter = 'React Router',
 	HTMX = 'HTMX',
 	Rust = 'Rust',
 	ActixWeb = 'Actix Web',
