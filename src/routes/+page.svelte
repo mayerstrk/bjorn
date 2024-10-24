@@ -11,7 +11,9 @@
 	/>
 </svelte:head>
 
-<div class="scrollbar-hidden flex h-full w-full flex-col md:flex-row">
+<div
+	class="scrollbar-hidden flex h-full w-full flex-col md:flex-row md:overflow-y-auto"
+>
 	<HomeSideBar />
 	<Main />
 </div>
