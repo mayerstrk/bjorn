@@ -4,10 +4,10 @@
 </script>
 
 <main
-	class="scrollbar-hidden relative flex min-h-0 w-full flex-col gap-2 p-2 md:w-1/2 md:flex-1 md:grow md:overflow-y-auto md:p-4"
+	class="scrollbar-hidden relative flex min-h-0 w-full flex-col gap-2 p-2 md:w-1/2 md:flex-1 md:grow md:p-4"
 >
 	<nav
-		class="sticky top-0 z-10 flex w-full max-w-screen-2xl rounded-md bg-bkg-1/40 p-2 px-5 backdrop-blur-sm md:bg-transparent"
+		class="sticky top-0 z-10 flex w-full max-w-screen-2xl rounded-md bg-bkg-1/10 p-2 px-5 backdrop-blur-sm md:static md:bg-transparent"
 	>
 		<ul class="flex w-full gap-2 text-sm italic text-accent-1">
 			<li class="font-medium md:font-normal">
@@ -52,7 +52,7 @@
 		</ul>
 	</nav>
 
-	<article class="scrollbar-hidden flex-1 flex-col gap-4">
+	<article class="scrollbar-hidden flex-1 flex-col gap-4 overflow-y-auto">
 		{#each cvArticles as cvArticle}
 			<CvCard {...cvArticle} />
 		{/each}
