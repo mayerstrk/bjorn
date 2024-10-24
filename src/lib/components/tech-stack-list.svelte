@@ -58,7 +58,7 @@
 </script>
 
 <div
-	class="relative flex w-full flex-col gap-2 overflow-x-clip rounded-lg md:mt-auto"
+	class="relative my-10 flex w-full flex-col gap-2 overflow-x-clip rounded-lg bg-white/5 p-2 md:my-0 md:mt-auto"
 	id="{parentComponentName}-tech-stack"
 >
 	<ul class="tech-grid">
