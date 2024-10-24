@@ -58,7 +58,7 @@
 </script>
 
 <div
-	class="flex flex-col gap-2 rounded-lg p-2 shadow-lg md:mt-auto"
+	class="relative flex w-full flex-col gap-2 overflow-x-clip rounded-lg md:mt-auto"
 	id="{parentComponentName}-tech-stack"
 >
 	<ul class="tech-grid">
@@ -67,7 +67,7 @@
 				id="{parentComponentName}-tech-stack-env-list-{tech.name}"
 				class="tooltip m-auto p-1"
 			>
-				<tech.component sizeClass="size-4 md:size-6" />
+				<tech.component sizeClass="size-6" />
 				<span class="tooltiptext">{tech.name}</span>
 			</li>
 		{/each}
@@ -98,7 +98,7 @@
 		cursor: pointer;
 	}
 
-	.tooltip .tooltiptext {
+	.tooltiptext {
 		visibility: hidden;
 		width: 120px;
 		background-color: #333;

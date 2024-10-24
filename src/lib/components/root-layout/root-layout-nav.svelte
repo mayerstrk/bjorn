@@ -69,7 +69,7 @@
 <nav
 	bind:offsetHeight={navOffsetHeight}
 	id="root-layout-nav"
-	class="sticky top-0 z-50 m-auto flex w-full max-w-screen-2xl items-center justify-between p-5"
+	class="top-0 z-50 m-auto flex w-full max-w-screen-2xl items-center justify-between p-5"
 >
 	{#if isMobileNavModalOpen}
 		<div

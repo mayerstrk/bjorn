@@ -9,7 +9,7 @@
 >
 	<div
 		id="root-layout__slot-wrapper"
-		class="relative flex w-full flex-col md:h-full md:min-h-0 md:flex-1 md:grow"
+		class="scrollbar-hidden relative flex w-full flex-col md:h-full md:min-h-0 md:flex-1 md:grow"
 	>
 		<slot />
 	</div>
