@@ -14,7 +14,7 @@
 		<slot />
 	</div>
 	<footer class="relative flex flex-col">
-		<p class="font-semi pb-3 text-xs opacity-50 md:text-xs">
+		<p class="pb-3 text-xs opacity-50 md:text-xs">
 			&copy; 2024 Mayer Starkman. All rights reserved.
 		</p>
 	</footer>

@@ -52,9 +52,7 @@ const config = {
 				'ping-slower': 'ping 5s ease infinite'
 			},
 			fontFamily: {
-				mplus: ['mplus', 'sans-serif'],
-				inter: ['inter', 'sans-serif'],
-				poppins: ['poppins', 'sans-serif']
+				poppins: ['poppins']
 			},
 			keyframes: {
 				'fade-in': {

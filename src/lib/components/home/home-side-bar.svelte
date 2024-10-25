@@ -11,9 +11,7 @@
 			id="home-hero-title"
 			class="items-middle flex w-full flex-col md:w-auto"
 		>
-			<h1 class="font-poppins text-4xl leading-tight md:font-normal">
-				Mayer Starkman Flores
-			</h1>
+			<h1 class="text-4xl leading-tight">Mayer Starkman Flores</h1>
 			<h2>Senior Full Stack Engineer</h2>
 		</div>
 		<div id="home-hero-content" class=" flex grow flex-col">
