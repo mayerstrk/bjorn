@@ -36,23 +36,14 @@ const config = {
 				},
 				content: {
 					1: 'hsl(var(--color-content1) / <alpha-value>)',
-					2: 'hsl(var(--color-content2) / <alpha-value>)',
-					3: 'hsl(var(--color-content3) / <alpha-value>)'
+					2: 'hsl(var(--color-content2) / <alpha-value>)'
 				}
 			},
 			willChange: {
 				blur: 'backdrop-blur'
 			},
-			animation: {
-				'spin-slower': 'spin 35s ease infinite',
-				'spin-slow': 'spin 25s ease-in-out infinite reverse',
-				'spin-fast': 'spin 0.2s linear infinite',
-				'fade-in-up': 'fade-in-up 1s ease-out forwards',
-				'fade-in': 'fade-in 1s ease forwards',
-				'ping-slower': 'ping 5s ease infinite'
-			},
 			fontFamily: {
-				poppins: ['poppins']
+				poppins: ['Poppins', 'sans-serif']
 			},
 			keyframes: {
 				'fade-in': {

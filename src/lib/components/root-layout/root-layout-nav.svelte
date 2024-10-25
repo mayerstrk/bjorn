@@ -15,22 +15,7 @@
 
 	let modalElement = $state<HTMLElement>();
 
-	$effect(() => {
-		if (browser && isMobileNavModalOpen) {
-			const handleClickOutside = (event: MouseEvent) => {
-				if (modalElement && !modalElement.contains(event.target as Node)) {
-					toggleisMobileNavModalOpen();
-				}
-			};
-			document.addEventListener('click', handleClickOutside);
-
-			return () => {
-				document.removeEventListener('click', handleClickOutside);
-			};
-		}
-	});
-
-	let theme = $state('');
+	let theme = $state(Theme.Light);
 
 	function toggleTheme() {
 		theme = theme === Theme.Dark ? Theme.Light : Theme.Dark;
@@ -38,32 +23,6 @@
 			document.documentElement.setAttribute('data-theme', theme);
 		}
 	}
-
-	$effect(() => {
-		if (browser) {
-			untrack(() => {
-				const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-				const handleMediaChange = (event: MediaQueryListEvent) => {
-					theme = event.matches ? Theme.Dark : Theme.Light;
-				};
-
-				mediaQuery.addEventListener('change', handleMediaChange);
-
-				theme = mediaQuery.matches ? Theme.Dark : Theme.Light;
-
-				return () => {
-					mediaQuery.removeEventListener('change', handleMediaChange);
-				};
-			});
-		}
-	});
-
-	$effect(() => {
-		if (browser) {
-			document.documentElement.setAttribute('data-theme', theme);
-		}
-	});
 </script>
 
 <nav
@@ -111,6 +70,7 @@
 	<div id="nav-controls" class="flex items-center gap-2">
 		<a
 			href="https://github.com/mayerstrk"
+			aria-label="Mayer Starkman's Github profile"
 			target="_blank"
 			rel="noopener noreferrer"
 			class="group group flex size-9 items-center rounded-md bg-transparent transition-all duration-500 hover:bg-stone-800 md:size-11"
@@ -131,12 +91,13 @@
 			>
 		</a>
 		<button
+			aria-label="Theme button"
+			aria-roledescription="Switch between dark and light theme"
 			type="button"
-			class="group size-11 rounded-full bg-accent-3 transition-all hover:scale-110 active:opacity-50 disabled:animate-ping-slower disabled:cursor-not-allowed disabled:bg-white/30 md:size-11"
+			class="group size-11 rounded-full bg-accent-3 transition-all hover:scale-110 active:opacity-50 md:size-11"
 			onclick={toggleTheme}
-			disabled={!theme}
 		>
-			{#if theme && theme === Theme.Dark}
+			{#if theme === Theme.Dark}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="22"
@@ -156,7 +117,7 @@
 						d="m6.34 17.66-1.41 1.41"
 					/><path d="m19.07 4.93-1.41 1.41" /></svg
 				>
-			{:else if theme && theme === Theme.Light}
+			{:else}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="22"
@@ -172,6 +133,8 @@
 			{/if}
 		</button>
 		<button
+			aria-label="Menu button"
+			aria-roledescription="Toggle menu"
 			type="button"
 			class="size-9 rounded-md md:size-11"
 			onclick={(e) => {
