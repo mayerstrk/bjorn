@@ -3,7 +3,7 @@
 </script>
 
 <aside
-	class="scrollbar-hidden w-full p-2 md:min-h-full md:w-1/2 md:overflow-y-scroll md:p-6"
+	class="scrollbar-hidden h-fit w-full p-2 md:h-full md:w-1/2 md:overflow-y-scroll md:p-6"
 >
 	<section id="home-hero" class="flex h-full flex-col">
 		<div
@@ -13,7 +13,7 @@
 			<h1 class="text-4xl leading-tight">Mayer Starkman Flores</h1>
 			<h2>Senior Full Stack Engineer</h2>
 		</div>
-		<div class="h-1/3 w-full">
+		<div class="h-40 w-full md:h-1/3">
 			<DimensionalBjorn />
 		</div>
 		<div id="home-hero-content" class=" flex grow flex-col">

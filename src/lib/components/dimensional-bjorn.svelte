@@ -175,9 +175,7 @@
 
 <div class="relative h-full w-full">
 	{#if isLoading}
-		<div
-			class="absolute inset-0 flex h-full w-full items-center justify-center"
-		>
+		<div class="absolute inset-0 flex items-center justify-center">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"
@@ -194,5 +192,5 @@
 			</svg>
 		</div>
 	{/if}
-	<canvas bind:this={canvas} class="abosolute inset-0"> </canvas>
+	<canvas bind:this={canvas} class="absolute inset-0"> </canvas>
 </div>
