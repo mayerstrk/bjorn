@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DimensionalBjorn from '../dimensional-bjorn.svelte';
+	import TechStackList from '../tech-stack-list.svelte';
 </script>
 
 <aside
@@ -23,6 +24,9 @@
 				environments that boost productivity and inspire creativity (I use vim
 				btw).
 			</p>
+		</div>
+		<div class="mt-auto w-full">
+			<TechStackList parentComponentName="home-hero" />
 		</div>
 	</section>
 </aside>

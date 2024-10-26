@@ -17,6 +17,20 @@
 
 	let theme = $state(Theme.Light);
 
+	$effect(() => {
+		if (browser && isMobileNavModalOpen) {
+			const handleClickOutside = (event: MouseEvent) => {
+				if (modalElement && !modalElement.contains(event.target as Node)) {
+					toggleisMobileNavModalOpen();
+				}
+			};
+			document.addEventListener('click', handleClickOutside);
+			return () => {
+				document.removeEventListener('click', handleClickOutside);
+			};
+		}
+	});
+
 	function toggleTheme() {
 		theme = theme === Theme.Dark ? Theme.Light : Theme.Dark;
 		if (browser) {
@@ -28,7 +42,7 @@
 <nav
 	bind:offsetHeight={navOffsetHeight}
 	id="root-layout-nav"
-	class="top-0 z-50 m-auto flex w-full max-w-screen-2xl items-center justify-between p-5"
+	class="relative top-0 z-50 m-auto flex w-full max-w-screen-2xl items-center justify-between p-5"
 >
 	{#if isMobileNavModalOpen}
 		<div
