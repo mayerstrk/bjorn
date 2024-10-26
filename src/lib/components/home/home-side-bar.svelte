@@ -1,4 +1,5 @@
 <script lang="ts">
+	import DimensionalBjorn from '../dimensional-bjorn.svelte';
 </script>
 
 <aside
@@ -11,6 +12,9 @@
 		>
 			<h1 class="text-4xl leading-tight">Mayer Starkman Flores</h1>
 			<h2>Senior Full Stack Engineer</h2>
+		</div>
+		<div class="h-1/3 w-full">
+			<DimensionalBjorn />
 		</div>
 		<div id="home-hero-content" class=" flex grow flex-col">
 			<p class="max-w-[900px] py-2 text-sm leading-loose text-content-2">
