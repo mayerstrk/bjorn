@@ -19,8 +19,8 @@ export default [
       apps work well across different platforms. I use Rust with Actix Web and 
       Go for the backend and React with Remix, Svelte, and HTMX to build fast,
       efficient UIs, keeping state simple and as synced as possible with the UI by using SSR with
-      the "backend for your frontend" architecure. We deploy on cloudfare workers which run
-      V8 isolates on cloudfare's edge network. Also completed some freelance gigs on the side.
+      the "backend for your frontend" architecure. We deploy on cloudfare workers which run on
+      V8 isolates on cloudfare's edge network, for fast distrubuted frontends. Also completed some freelance gigs on the side.
     `,
 		tags: [
 			Tech.Typescript,
