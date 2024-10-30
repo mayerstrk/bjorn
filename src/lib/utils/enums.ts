@@ -29,6 +29,7 @@ const enum Tech {
 	React = 'React',
 	ReactRouter = 'React Router',
 	HTMX = 'HTMX',
+	NestJS = 'NestJS',
 	Rust = 'Rust',
 	ActixWeb = 'Actix Web',
 	Go = 'Go',

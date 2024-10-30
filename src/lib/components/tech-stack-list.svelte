@@ -9,6 +9,7 @@
 	import Rust from '$lib/components/tech-logos/rust-logo.svg.svelte';
 	import ActixWeb from '$lib/components/tech-logos/actix-logo.svg.svelte';
 	import NodeJS from '$lib/components/tech-logos/node-logo.svg.svelte';
+	import NestJS from '$lib/components/tech-logos/nest-logo.svg.svelte';
 	import Express from '$lib/components/tech-logos/express-logo.svg.svelte';
 	import PostgreSql from '$lib/components/tech-logos/postgresql-logo.svg.svelte';
 	import Sqlite from '$lib/components/tech-logos/sqlite-logo.svg.svelte';
@@ -39,6 +40,7 @@
 		{ name: Tech.Rust, component: Rust },
 		{ name: Tech.ActixWeb, component: ActixWeb },
 		{ name: Tech.NodeJS, component: NodeJS },
+		{ name: Tech.NestJS, component: NestJS },
 		{ name: Tech.Express, component: Express },
 		{ name: Tech.PostgreSQL, component: PostgreSql },
 		{ name: Tech.SQLite, component: Sqlite },
