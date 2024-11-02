@@ -4,7 +4,7 @@
 </script>
 
 <div
-	class="relative my-10 flex w-full flex-col gap-2 overflow-x-clip rounded-lg p-4 py-12 md:mt-auto md:py-0"
+	class="relative my-10 flex w-full flex-col gap-2 overflow-x-clip rounded-lg p-4 py-12 md:mt-auto md:p-0"
 	id="{parentComponentName}-tech-stack"
 >
 	<ul class="tech-grid">
@@ -13,7 +13,7 @@
 				id="{parentComponentName}-tech-stack-env-list-{tech.name}"
 				class="tooltip m-auto p-1"
 			>
-				<tech.component sizeClass="size-6 md:size-4" />
+				<tech.component sizeClass="size-6 md:size-5" />
 				<span class="tooltiptext">{tech.name}</span>
 			</li>
 		{/each}
@@ -24,7 +24,7 @@
 				id="{parentComponentName}-tech-stack-web-list-{tech.name}"
 				class="tooltip m-auto p-1"
 			>
-				<tech.component sizeClass="size-6 md:size-4" />
+				<tech.component sizeClass="size-6 md:size-5" />
 				<span class="tooltiptext">{tech.name}</span>
 			</li>
 		{/each}
@@ -34,9 +34,13 @@
 <style>
 	.tech-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(48px, auto));
-		grid-auto-rows: min-content;
-		grid-auto-flow: dense;
+		grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+		grid-auto-rows: 1fr;
+		grid-auto-flow: row;
+	}
+
+	.tech-grid > * {
+		aspect-ratio: 1 / 1; /* Ensures each cell is a square */
 	}
 
 	.tooltip {
