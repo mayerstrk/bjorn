@@ -13,7 +13,7 @@
 	>
 		<slot />
 	</div>
-	<footer class="relative mt-96 flex w-full flex-col text-xs md:mt-0">
+	<footer class="relative mt-40 flex w-full flex-col text-xs md:mt-0">
 		<p class="mx-auto pb-3 text-xs opacity-50 md:mx-0">
 			&copy; 2024 Mayer Starkman. All rights reserved.
 		</p>
