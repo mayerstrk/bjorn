@@ -35,7 +35,12 @@
 		1 / 160
 	);
 
-	async function initThreeJS() {
+	onMount(() => {
+		let disposeThreeJS = initThreeJS();
+		return disposeThreeJS;
+	});
+
+	function initThreeJS() {
 		const scene = new Scene();
 		const camera = new PerspectiveCamera(
 			75,
@@ -82,6 +87,19 @@
 		scene.add(directionalLight);
 
 		const loader = new GLTFLoader();
+		const pivot = new Group();
+		scene.add(pivot);
+
+		const resizeObserver = new ResizeObserver(() => {
+			if (canvas) {
+				const width = canvas.parentElement?.clientWidth ?? 0;
+				const height = canvas.parentElement?.clientHeight ?? 0;
+				renderer.setSize(width, height);
+				camera.aspect = width / height;
+				camera.updateProjectionMatrix();
+			}
+		});
+
 		loader.load(
 			'/three/dimensional-bjorn.gltf',
 			(gltf) => {
@@ -91,8 +109,6 @@
 					node.receiveShadow = settings.castShadow;
 				});
 
-				const pivot = new Group();
-				scene.add(pivot);
 				pivot.add(model);
 
 				const box = new Box3().setFromObject(model);
@@ -142,25 +158,9 @@
 				animate();
 				isLoading = false;
 
-				const resizeObserver = new ResizeObserver(() => {
-					if (canvas) {
-						const width = canvas.parentElement?.clientWidth ?? 0;
-						const height = canvas.parentElement?.clientHeight ?? 0;
-						renderer.setSize(width, height);
-						camera.aspect = width / height;
-						camera.updateProjectionMatrix();
-					}
-				});
-
 				if (canvas.parentElement) {
 					resizeObserver.observe(canvas.parentElement);
 				}
-
-				return () => {
-					resizeObserver.disconnect();
-					renderer.dispose();
-					controls.dispose();
-				};
 			},
 			undefined,
 			(error) => {
@@ -168,9 +168,14 @@
 				isLoading = false;
 			}
 		);
-	}
 
-	onMount(initThreeJS);
+		// Return a cleanup function to dispose of resources on unmount
+		return () => {
+			resizeObserver.disconnect();
+			renderer.dispose();
+			scene.clear();
+		};
+	}
 </script>
 
 <div class="relative h-full w-full">
