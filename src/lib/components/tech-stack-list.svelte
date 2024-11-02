@@ -13,7 +13,7 @@
 				id="{parentComponentName}-tech-stack-env-list-{tech.name}"
 				class="tooltip m-auto p-1"
 			>
-				<tech.component sizeClass="size-6" />
+				<tech.component sizeClass="size-4" />
 				<span class="tooltiptext">{tech.name}</span>
 			</li>
 		{/each}
@@ -24,7 +24,7 @@
 				id="{parentComponentName}-tech-stack-web-list-{tech.name}"
 				class="tooltip m-auto p-1"
 			>
-				<tech.component sizeClass="size-6" />
+				<tech.component sizeClass="size-4" />
 				<span class="tooltiptext">{tech.name}</span>
 			</li>
 		{/each}
