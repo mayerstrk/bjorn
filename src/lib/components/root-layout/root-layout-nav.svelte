@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { untrack } from 'svelte';
 	import { page } from '$app/stores';
 	import Logo from '$lib/components/logo.svelte';
 	import { fade } from 'svelte/transition';
@@ -42,7 +41,7 @@
 <nav
 	bind:offsetHeight={navOffsetHeight}
 	id="root-layout-nav"
-	class="relative top-0 z-50 m-auto flex w-full max-w-screen-2xl items-center justify-between p-5"
+	class="relative top-0 z-50 mx-auto box-border flex w-full max-w-screen-2xl items-center justify-between p-5"
 >
 	{#if isMobileNavModalOpen}
 		<div
