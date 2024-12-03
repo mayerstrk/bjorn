@@ -14,7 +14,7 @@
 			<h1 class="text-4xl leading-tight">Mayer Starkman Flores</h1>
 			<h2>Senior Full Stack Engineer</h2>
 		</div>
-		<div class="h-48 w-full md:h-1/3">
+		<div class="min-h-48 w-full md:h-1/3">
 			<DimensionalBjorn />
 		</div>
 		<div id="home-hero-content" class=" flex grow flex-col">

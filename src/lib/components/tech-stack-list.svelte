@@ -4,7 +4,7 @@
 </script>
 
 <div
-	class="relative my-10 flex w-full flex-col gap-2 overflow-x-clip rounded-lg p-4 py-12 md:mt-auto md:p-0"
+	class="relative my-10 flex w-full flex-col gap-2 overflow-x-clip rounded-lg p-4 py-12 md:mt-auto md:py-2"
 	id="{parentComponentName}-tech-stack"
 >
 	<ul class="tech-grid">
