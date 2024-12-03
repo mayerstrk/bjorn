@@ -16,6 +16,7 @@ const enum Theme {
 }
 
 const enum Tech {
+	SQL = 'SQL',
 	Neovim = 'Neovim',
 	Nginx = 'NGINX',
 	Redux = 'Redux',
@@ -25,7 +26,7 @@ const enum Tech {
 	Svelte = 'Svelte',
 	Zustand = 'Zustand',
 	Remix = 'Remix',
-	Tailwind = 'Taliwind',
+	Tailwind = 'Tailwind',
 	React = 'React',
 	ReactRouter = 'React Router',
 	HTMX = 'HTMX',
@@ -67,7 +68,14 @@ const enum Tech {
 	Dataverse = 'Dataverse',
 	Analysis = 'Analysis',
 	Mathematics = 'Mathematics',
-	Physics = 'Physics'
+	Physics = 'Physics',
+	Cypress = 'Cypress',
+	Jest = 'Jest',
+	Kubernetes = 'Kubernetes',
+	AWS = 'AWS',
+	GitHubActions = 'GitHub Actions',
+	Jenkins = 'Jenkins',
+	CloudflareWorkers = 'Cloudflare Workers'
 }
 
 export { Breakpoint, DimensionalBjornMode, Theme, Tech };
