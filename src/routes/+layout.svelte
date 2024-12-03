@@ -5,7 +5,7 @@
 
 <RootLayoutNav />
 <page
-	class="scrollbar-hidden mx-auto flex h-full w-full min-w-[320px] max-w-screen-xl flex-col overflow-y-auto px-5"
+	class="scrollbar-hidden mx-auto box-border flex h-full w-full min-w-[320px] max-w-screen-xl flex-col overflow-y-auto px-5"
 >
 	<div
 		id="root-layout__slot-wrapper"
