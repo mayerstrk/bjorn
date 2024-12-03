@@ -1,8 +1,8 @@
 <!doctype html>
 <html
 	lang="en"
-	class="gradient-background scrollbar-hidden h-full min-w-[320px] bg-no-repeat font-poppins text-content-1"
-	data-theme=""
+	class="gradient-background scrollbar-hidden h-full min-w-[320px] bg-fixed bg-no-repeat font-poppins text-content-1"
+	app-data-theme=""
 >
 	<head>
 		<meta charset="utf-8" />
@@ -69,14 +69,5 @@
 		class="flex h-full w-full flex-col text-sm leading-loose"
 	>
 		<div style="display: contents">%sveltekit.body%</div>
-		<script>
-			(function () {
-				const prefersDarkMode = window.matchMedia(
-					'(prefers-color-scheme: dark)'
-				).matches;
-				const theme = prefersDarkMode ? 'dark' : 'light';
-				document.documentElement.setAttribute('data-theme', theme);
-			})();
-		</script>
 	</body>
 </html>
