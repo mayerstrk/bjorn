@@ -10,18 +10,42 @@ export type CvArticleData = {
 
 export default [
 	{
-		role: 'SaaS Full Stack Developer',
-		place: 'SaaS Applications and Freelance',
+		role: 'Tech Lead (Backend)',
+		place: 'WeBeet.io',
+		timeRange: 'March 2024 – Present',
+		description: `
+    Architected and implemented CI/CD pipelines leveraging Jenkins, GitHub Actions, Kubernetes, Docker, 
+    and AWS to dramatically enhance deployment efficiency. Developed automated testing frameworks 
+    using Jest and Cypress and trained the team in Test-Driven Development practices to improve 
+    code reliability and maintainability. Provided technical leadership and support, particularly 
+    in backend domains such as authentication, system integration, and security, fostering a collaborative 
+    and high-performing development environment.
+  `,
+		tags: [
+			Tech.Typescript,
+			Tech.NodeJS,
+			Tech.Jenkins,
+			Tech.GitHubActions,
+			Tech.Kubernetes,
+			Tech.Docker,
+			Tech.AWS,
+			Tech.Jest,
+			Tech.Cypress,
+			Tech.SQL
+		]
+	},
+	{
+		role: 'Full Stack Developer',
+		place: 'NewOrg Latam',
 		timeRange: 'January 2024 – Present',
 		description: `
-      Working on two SaaS projects with a couple of partners. We focus on making things 
-      easy for both users and developers, performance, and making sure the 
-      apps work well across different platforms. I use Rust with Actix Web and 
-      Go for the backend and React with Remix, Svelte, and HTMX to build fast,
-      efficient UIs, keeping state simple and as synced as possible with the UI by using SSR with
-      the "backend for your frontend" architecure. We deploy on cloudfare workers which run on
-      V8 isolates on cloudfare's edge network, for fast distrubuted frontends. Also completed some freelance gigs on the side.
-    `,
+    Led development of SaaS projects alongside two partners, focusing on intuitive, high-performing 
+    UIs and robust backend systems. Utilized Rust (Actix) and Go for the backend and React (Remix), 
+    Svelte, and HTMX on the frontend. Prioritized SSR and the "backend for your frontend" architecture 
+    to keep state synchronized with the UI. Deployed applications on Cloudflare Workers for fast, distributed 
+    frontends, leveraging V8 isolates for efficient edge network performance. Additionally, completed freelance 
+    projects with a similar technology stack.
+  `,
 		tags: [
 			Tech.Typescript,
 			Tech.Svelte,
@@ -32,7 +56,8 @@ export default [
 			Tech.ActixWeb,
 			Tech.Go,
 			Tech.PostgreSQL,
-			Tech.SQLite
+			Tech.SQLite,
+			Tech.CloudflareWorkers
 		]
 	},
 	{
