@@ -36,7 +36,7 @@
 <div class="container">
 	<h1>Git Repository Contents</h1>
 
-	<button on:click={fetchRepo} disabled={isLoading}>
+	<button onclick={fetchRepo} disabled={isLoading}>
 		{isLoading ? 'Loading...' : 'Reload'}
 	</button>
 
