@@ -65,6 +65,15 @@
 					</li>
 					<li>
 						<a
+							href="/python-playground"
+							class:active-route={$page.url.pathname === '/python-playground'}
+							class="w-full"
+						>
+							Python Github Editor
+						</a>
+					</li>
+					<li>
+						<a
 							class:active-route={$page.url.pathname === '/works'}
 							href="/works">Works</a
 						>
