@@ -1,17 +1,28 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import type { PyodideInterface } from 'pyodide';
-	import { Terminal } from 'xterm';
-	import { FitAddon } from 'xterm-addon-fit';
 	import 'xterm/css/xterm.css';
 
-	type FileNode = {
-		name: string;
-		path: string;
-		type: 'directory' | 'file';
-		children: FileNode[];
-	};
+	// Import utilities
+	import {
+		type PyodideInterface,
+		type FileNode,
+		initializePyodide,
+		runPythonCode,
+		readFile,
+		writeFile,
+		executeFile,
+		setupEnvironment,
+		scanDirectory
+	} from '$lib/utils/utils.pyodidie/index';
 
+	import {
+		type Terminal,
+		initializeTerminal,
+		writeToTerminal,
+		readFromTerminal
+	} from '$lib/utils/utils.xterm';
+
+	// State declarations
 	let fileTree = $state<FileNode | null>(null);
 	let selectedFile = $state<string | null>(null);
 	let fileContent = $state<string>('');
@@ -20,231 +31,142 @@
 	let pyodide = $state<PyodideInterface | null>(null);
 	let initialized = $state<boolean>(false);
 
-	async function writeFile(path: string, content: string) {
-		if (!pyodide || !terminal) return;
-
-		try {
-			const cleanContent = content
-				.replace(/\\/g, '\\\\')
-				.replace(/'''/g, "\\'\\'\\'");
-
-			const pythonWrite = `
-try:
-    content = ${JSON.stringify(cleanContent)}
-    with open('${path}', 'w') as f:
-        f.write(content)
-
-    # Verify content
-    with open('${path}', 'r') as f:
-        content = f.read()
-except Exception as e:
-    print(f"Error writing file {path}: {str(e)}")
-    raise e
-        `;
-
-			await pyodide.runPythonAsync(pythonWrite);
-		} catch (error) {
-			console.error('Write error:', error);
-			terminal.writeln(`Error writing file: ${error}`);
-		}
-	}
-
-	async function readFile(filePath: string) {
-		if (!pyodide) return '';
-
-		try {
-			const pythonRead = `
-with open('${filePath}', 'r') as f:
-    content = f.read()
-content
-        `;
-			const content = await pyodide.runPythonAsync(pythonRead);
-			return content;
-		} catch (error) {
-			console.error('Read error:', error);
-			terminal?.writeln(`Error reading file: ${error}`);
-			return '';
-		}
-	}
-
-	async function runPythonFile(filePath: string) {
-		if (!pyodide || !terminal) return;
-
-		try {
-			const pythonRun = `
-import os
-import sys
-from pathlib import Path
-
-# Normalize file path
-file_path = os.path.normpath('${filePath}')
-file_dir = os.path.dirname(file_path)
-
-# Store original directory
-original_dir = os.getcwd()
-
-# Add directories to Python path
-if file_dir:
-    sys.path.insert(0, file_dir)
-sys.path.insert(0, '.')
-
-
-try:
-    # Execute file
-    with open(file_path, 'r') as f:
-        code = f.read()
-        # Create a new namespace with __name__ set to __main__
-        namespace = {'__name__': '__main__', '__file__': file_path}
-        exec(code, namespace)
-finally:
-    # restore the original directory
-    os.chdir(original_dir)
-        `;
-
-			await pyodide.runPythonAsync(pythonRun);
-		} catch (error) {
-			terminal.writeln(`Error running file: ${error}`);
-			console.error('Run error:', error);
-
-			try {
-				await pyodide.runPythonAsync(`
-import traceback
-print("Python traceback:")
-traceback.print_exc()
-            `);
-			} catch (e) {
-				console.error('Error printing traceback:', e);
-			}
-		}
-	}
-
-	async function updateFileTree() {
-		if (!pyodide) return;
-
-		try {
-			const treeData = await pyodide.runPythonAsync(`
-import os
-import json
-
-def scan_directory(path='.'):
-    result = []
-    for item in sorted(os.listdir(path)):
-        if item.startswith('.'): continue
-        full_path = os.path.join(path, item)
-        is_dir = os.path.isdir(full_path)
-        node = {
-            "name": item,
-            "path": full_path.replace('\\\\', '/'),
-            "type": "directory" if is_dir else "file",
-            "children": scan_directory(full_path) if is_dir else []
-        }
-        result.append(node)
-    return result
-
-json.dumps(scan_directory())
-        `);
-
-			fileTree = {
-				name: 'root',
-				path: '.',
-				type: 'directory',
-				children: JSON.parse(treeData)
-			};
-		} catch (error) {
-			console.error('Tree update error:', error);
-		}
-	}
-
-	function initTerminal(node: HTMLElement) {
+	// Terminal initialization
+	function initTerminalHandler(node: HTMLElement) {
 		if (!browser) return;
 
-		terminal = new Terminal({
-			cursorBlink: true,
-			theme: { background: '#1a1a1a', foreground: '#ffffff' },
-			fontSize: 14
-		});
+		terminal = initializeTerminal(
+			node,
+			{
+				cursorBlink: true,
+				theme: { background: '#1a1a1a', foreground: '#ffffff' },
+				fontSize: 14
+			},
+			handleTerminalData
+		);
 
-		if (!terminal) {
-			console.error('Failed to create terminal');
-			return;
+		if (terminal) {
+			writeToTerminal(terminal, 'Loading Python...');
 		}
+	}
+	// Terminal data handling
+	function handleTerminalData(data: string) {
+		if (!terminal) return;
 
-		const fitAddon = new FitAddon();
-		terminal.loadAddon(fitAddon);
-		terminal.open(node);
-		fitAddon.fit();
+		const result = readFromTerminal(terminal, currentCommand, data);
 
-		terminal.write('Loading Python...\r\n');
-
-		terminal.onData((data) => {
-			if (!terminal) return;
-
-			if (data === '\r') {
-				terminal.write('\r\n');
-				if (currentCommand.trim()) {
-					handleCommand(currentCommand.trim());
-				} else {
-					terminal.write('$ ');
-				}
-				currentCommand = '';
-			} else if (data === '\u007F') {
-				if (currentCommand.length > 0) {
-					currentCommand = currentCommand.slice(0, -1);
-					terminal.write('\b \b');
-				}
+		if (result.shouldExecute) {
+			if (result.newCommand.trim()) {
+				handleCommand(result.newCommand.trim());
 			} else {
-				currentCommand = currentCommand + data;
-				terminal.write(data);
+				writeToTerminal(terminal, '$ ', false);
 			}
-		});
-
-		window.addEventListener('resize', () => fitAddon.fit());
+			currentCommand = '';
+		} else {
+			currentCommand = result.newCommand;
+		}
 	}
 
-	async function loadPyodide() {
-		if (!browser || !terminal) return;
+	// Command handling
+	async function handleCommand(cmd: string) {
+		if (!terminal) return;
+
+		const parts = cmd.split(' ');
+		const command = parts[0];
+		const args = parts.slice(1);
 
 		try {
-			const loadPyodideModule = (window as any).loadPyodide;
-			if (loadPyodideModule) {
-				pyodide = await loadPyodideModule({
-					indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/',
-					stdout: (text: string) => terminal?.writeln(text),
-					stderr: (text: string) => terminal?.writeln(text)
-				});
+			switch (command) {
+				case 'clear':
+					terminal.clear();
+					break;
 
-				await pyodide.runPythonAsync(`
-import sys
-import os
-sys.path.append('.')
-            `);
+				case 'ls':
+					if (!pyodide) {
+						writeToTerminal(terminal, 'Failed to find pyodide');
+						break;
+					}
+					fileTree = await scanDirectory(pyodide);
+					if (fileTree) {
+						const printTree = (node: FileNode, indent: string = '') => {
+							node.children.forEach((child) => {
+								if (!terminal) {
+									console.error(
+										'Tried to use xterm terminal but found null or undefined'
+									);
+									return;
+								}
+								writeToTerminal(
+									terminal,
+									`${indent}${child.type === 'directory' ? '📁' : '📄'} ${child.name}`
+								);
+								if (child.type === 'directory') {
+									printTree(child, indent + '    ');
+								}
+							});
+						};
+						printTree(fileTree);
+					}
+					break;
 
-				terminal.writeln('Python ready');
-				terminal.write('$ ');
+				case 'cat':
+					if (args[0] && terminal && pyodide) {
+						try {
+							const content = await readFile(pyodide, args[0]);
+							writeToTerminal(terminal, content);
+						} catch (error) {
+							writeToTerminal(terminal, `Error reading file: ${error}`);
+						}
+					}
+					break;
+
+				case 'python3':
+					if (!pyodide) {
+						writeToTerminal(terminal, 'Python not ready');
+						break;
+					}
+					try {
+						if (args[0]) {
+							await executeAndPrompt(args[0]);
+						} else {
+							const result = await runPythonCode(pyodide, command);
+							if (result) writeToTerminal(terminal, result.toString());
+						}
+					} catch (error) {
+						writeToTerminal(terminal, `Error: ${error}`);
+					}
+					break;
+
+				case 'help':
+					writeToTerminal(terminal, 'Commands: clear, ls, cat, python3');
+					break;
+
+				default:
+					if (command) {
+						writeToTerminal(terminal, `Unknown command: ${command}`);
+					}
 			}
 		} catch (error) {
-			terminal?.writeln(`Failed to load Python: ${error}`);
+			writeToTerminal(terminal, `Error: ${error}`);
+		} finally {
+			writeToTerminal(terminal, '\r\n$ ', false);
 		}
 	}
 
+	// Repository setup
 	async function fetchRepo() {
 		if (!browser || !terminal || !pyodide) return;
 
 		try {
-			// Initialize python environment
-			await pyodide.runPythonAsync(`
-import os
-import sys
-os.makedirs('test_dir', exist_ok=True)
-os.makedirs('test_dir_2', exist_ok=True)
-os.makedirs('test_dir/nested_test_dir', exist_ok=True)
-sys.path.append('.')
-        `);
+			// Initialize Python environment
+			await setupEnvironment(pyodide);
 
 			const response = await fetch(
 				'https://api.github.com/repos/mayerstrk/python-calculator-interview-task/git/trees/main?recursive=1'
 			);
 			const data = await response.json();
+
+			writeToTerminal(terminal, 'Loading repository files...');
 
 			for (const item of data.tree) {
 				if (item.type === 'blob') {
@@ -257,106 +179,73 @@ sys.path.append('.')
 						.replace(/\*\*name\*\*/g, '__name__')
 						.replace(/\*\*file\*\*/g, '__file__')
 						.replace(/\*\*path\*\*/g, '__path__');
-					await writeFile(item.path, content);
+					await writeFile(pyodide, item.path, content);
 				}
 			}
 
-			// Verify files after writing
-			await pyodide.runPythonAsync(`
-import os
+			await runPythonCode(
+				pyodide,
+				`
+				import os
+				for root, dirs, files in os.walk('.'):
+					for file in files:
+						if file.endswith('.py'):
+							with open(os.path.join(root, file), 'r') as f:
+								f.read()
+			`
+			);
 
-def verify_file(path):
-    with open(path, 'r') as f:
-        content = f.read()
-
-for root, dirs, files in os.walk('.'):
-    for file in files:
-        if file.endswith('.py'):
-            verify_file(os.path.join(root, file))
-        `);
-
-			await updateFileTree();
-			terminal.writeln('Repository loaded successfully.');
+			fileTree = await scanDirectory(pyodide);
+			writeToTerminal(terminal, 'Repository loaded successfully.');
+			writeToTerminal(terminal, '$ ', false);
 		} catch (error) {
-			terminal.writeln(`Failed to load repository: ${error}`);
+			writeToTerminal(terminal, `Failed to load repository: ${error}`);
+			writeToTerminal(terminal, '$ ', false);
 			console.error('Fetch error:', error);
 		}
 	}
 
-	async function handleCommand(cmd: string) {
-		if (!terminal) return;
-
-		const parts = cmd.split(' ');
-		const command = parts[0];
-		const args = parts.slice(1);
-
-		switch (command) {
-			case 'clear':
-				terminal.clear();
-				break;
-
-			case 'ls':
-				await updateFileTree();
-				if (fileTree) {
-					const printTree = (node: FileNode, indent: string = '') => {
-						node.children.forEach((child) => {
-							terminal.writeln(
-								`${indent}${child.type === 'directory' ? '📁' : '📄'} ${child.name}`
-							);
-							if (child.type === 'directory') {
-								printTree(child, indent + '    ');
-							}
-						});
-					};
-					printTree(fileTree);
-				}
-				break;
-
-			case 'cat':
-				if (args[0]) {
-					const content = await readFile(args[0]);
-					terminal.writeln(content);
-				}
-				break;
-
-			case 'python3':
-				if (!pyodide) {
-					terminal.writeln('Python not ready');
-					break;
-				}
-				try {
-					if (args[0]) {
-						await runPythonFile(args[0]);
-					} else {
-						const result = await pyodide.runPythonAsync(command);
-						if (result) terminal.writeln(result.toString());
-					}
-				} catch (error) {
-					terminal.writeln(`Error: ${error}`);
-				}
-				break;
-
-			case 'help':
-				terminal.writeln('Commands: clear, ls, cat, python3');
-				break;
-
-			default:
-				terminal.writeln(`Unknown command: ${command}`);
+	async function executeAndPrompt(path: string) {
+		try {
+			if (!terminal) {
+				console.error(
+					'Tried to use xterm terminal but found null or undefined'
+				);
+				return;
+			}
+			if (!pyodide) {
+				writeToTerminal(terminal, 'Failed to load pyodide');
+				return;
+			}
+			await executeFile(pyodide, path);
+		} finally {
+			if (!terminal) {
+				console.error(
+					'Tried to use xterm terminal but found null or undefined'
+				);
+			} else {
+				writeToTerminal(terminal, '$ ', false);
+			}
 		}
-
-		terminal.write('\r\n$ ');
 	}
-
+	// Initialization
 	$effect(() => {
 		if (browser && !initialized) {
 			initialized = true;
-			loadPyodide().then(() => {
-				if (pyodide) {
-					fetchRepo();
-				}
-			});
+			initializeSystem();
 		}
 	});
+
+	async function initializeSystem() {
+		if (!terminal) return;
+
+		pyodide = await initializePyodide(terminal);
+		if (pyodide) {
+			writeToTerminal(terminal, 'Python ready');
+			writeToTerminal(terminal, '$ ', false);
+			await fetchRepo();
+		}
+	}
 </script>
 
 <div class="flex h-full flex-col">
@@ -385,7 +274,23 @@ for root, dirs, files in os.walk('.'):
 															<button
 																onclick={async () => {
 																	selectedFile = grandChild.path;
-																	fileContent = await readFile(grandChild.path);
+																	if (!pyodide) {
+																		if (!terminal) {
+																			console.error(
+																				'Tried to use xterm terminal but found null or undefined'
+																			);
+																			return;
+																		}
+																		writeToTerminal(
+																			terminal,
+																			'Failed to find pyodide'
+																		);
+																		return;
+																	}
+																	fileContent = await readFile(
+																		pyodide,
+																		grandChild.path
+																	);
 																}}
 																class="flex w-full items-center space-x-2 py-1 text-left hover:text-blue-600"
 															>
@@ -398,7 +303,23 @@ for root, dirs, files in os.walk('.'):
 												<button
 													onclick={async () => {
 														selectedFile = childNode.path;
-														fileContent = await readFile(childNode.path);
+														if (!pyodide) {
+															if (!terminal) {
+																console.error(
+																	'Tried to use xterm terminal but found null or undefined'
+																);
+																return;
+															}
+															writeToTerminal(
+																terminal,
+																'Failed to find pyodide'
+															);
+															return;
+														}
+														fileContent = await readFile(
+															pyodide,
+															childNode.path
+														);
 													}}
 													class="flex w-full items-center space-x-2 py-1 text-left hover:text-blue-600"
 												>
@@ -412,7 +333,17 @@ for root, dirs, files in os.walk('.'):
 								<button
 									onclick={async () => {
 										selectedFile = node.path;
-										fileContent = await readFile(node.path);
+										if (!pyodide) {
+											if (!terminal) {
+												console.error(
+													'Tried to use xterm terminal but found null or undefined'
+												);
+												return;
+											}
+											writeToTerminal(terminal, 'Failed to find pyodide');
+											return;
+										}
+										fileContent = await readFile(pyodide, node.path);
 									}}
 									class="flex w-full items-center space-x-2 py-1 text-left hover:text-blue-600"
 								>
@@ -427,7 +358,7 @@ for root, dirs, files in os.walk('.'):
 			{/if}
 		</div>
 
-		<!-- Content  -->
+		<!-- Content and Terminal -->
 		<div class="flex flex-1 flex-col">
 			<div class="flex-1 overflow-y-auto bg-white p-4">
 				{#if selectedFile}
@@ -439,9 +370,11 @@ for root, dirs, files in os.walk('.'):
 					<div class="mt-2 flex space-x-4">
 						<button
 							onclick={async () => {
-								if (selectedFile) {
-									await writeFile(selectedFile, fileContent);
-									await updateFileTree();
+								if (selectedFile && pyodide && terminal) {
+									await writeFile(pyodide, selectedFile, fileContent);
+									writeToTerminal(terminal, `Wrote to ${selectedFile}`);
+									writeToTerminal(terminal, '$ ', false);
+									fileTree = await scanDirectory(pyodide);
 								}
 							}}
 							class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
@@ -450,9 +383,9 @@ for root, dirs, files in os.walk('.'):
 						</button>
 						<button
 							onclick={async () => {
-								if (selectedFile) {
-									await writeFile(selectedFile, fileContent);
-									await runPythonFile(selectedFile);
+								if (selectedFile && pyodide) {
+									await writeFile(pyodide, selectedFile, fileContent);
+									await executeAndPrompt(selectedFile);
 								}
 							}}
 							class="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
@@ -464,9 +397,7 @@ for root, dirs, files in os.walk('.'):
 					<h2 class="mb-4 text-lg font-bold">No file selected</h2>
 				{/if}
 			</div>
-
-			<!-- Terminal-->
-			<div class="relative h-80 bg-black" use:initTerminal></div>
+			<div class="relative h-80 bg-black" use:initTerminalHandler></div>
 		</div>
 	</div>
 </div>
