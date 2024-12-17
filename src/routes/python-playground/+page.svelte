@@ -417,7 +417,7 @@
 	</div>
 
 	<!-- Content and Terminal -->
-	<div class="flex flex-1 flex-col overflow-hidden">
+	<div class="flex flex-1 flex-col overflow-hidden md:h-full">
 		<div class="flex flex-1 flex-col overflow-hidden bg-white/80 p-4 md:h-1/2">
 			<h2 class="font-semibold">{selectedFile || 'No file selected'}</h2>
 			<div class="mt-4 flex-1 overflow-y-auto">
@@ -458,7 +458,7 @@
 					Run
 				</button>
 			</div>
-			<div class=" bg-black" use:initTerminalHandler></div>
+			<div class="bg-black md:h-full" use:initTerminalHandler></div>
 		</div>
 	</div>
 </div>
