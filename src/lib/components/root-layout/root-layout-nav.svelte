@@ -69,7 +69,7 @@
 							class:active-route={$page.url.pathname === '/python-playground'}
 							class="w-full"
 						>
-							Python Github Editor
+							Python IDE
 						</a>
 					</li>
 					<li>
