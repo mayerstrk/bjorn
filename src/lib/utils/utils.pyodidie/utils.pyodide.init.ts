@@ -15,7 +15,8 @@ export async function initializePyodide(
 		const pyodide = await loadPyodideModule({
 			indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/',
 			stdout: (text: string) => terminal?.writeln(text),
-			stderr: (text: string) => terminal?.writeln(text)
+			stderr: (text: string) => terminal?.writeln(text),
+			stdin: () => prompt('Input required:') || ''
 		});
 
 		// Load all Python utilities

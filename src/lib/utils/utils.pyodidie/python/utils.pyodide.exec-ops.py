@@ -1,3 +1,4 @@
+# lib/utils/utils.pyodide/python/utils.pyodide.exec-ops.py
 import os
 import sys
 import traceback
@@ -16,9 +17,10 @@ def execute_file(file_path: str) -> None:
             sys.path.insert(0, file_dir)
         sys.path.insert(0, ".")
 
-        # Execute file with __main__ namespace
+        # Execute file
         with open(file_path, "r") as f:
             code = f.read()
+            # Create namespace with __main__
             namespace = {"__name__": "__main__", "__file__": file_path}
             exec(code, namespace)
     except Exception as e:

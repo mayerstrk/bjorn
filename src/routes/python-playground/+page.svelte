@@ -49,6 +49,7 @@
 			writeToTerminal(terminal, 'Loading Python...');
 		}
 	}
+
 	// Terminal data handling
 	function handleTerminalData(data: string) {
 		if (!terminal) return;
@@ -71,16 +72,24 @@
 	async function handleCommand(cmd: string) {
 		if (!terminal) return;
 
+		// Add a static flag to track if we're in REPL mode
+		if (!(handleCommand as any).inPythonRepl) {
+			(handleCommand as any).inPythonRepl = false;
+		}
+
+		// If we're in REPL mode, don't process as terminal command
+		if ((handleCommand as any).inPythonRepl) {
+			return;
+		}
+
 		const parts = cmd.split(' ');
 		const command = parts[0];
 		const args = parts.slice(1);
-
 		try {
 			switch (command) {
 				case 'clear':
 					terminal.clear();
 					break;
-
 				case 'ls':
 					if (!pyodide) {
 						writeToTerminal(terminal, 'Failed to find pyodide');
@@ -108,7 +117,6 @@
 						printTree(fileTree);
 					}
 					break;
-
 				case 'cat':
 					if (args[0] && terminal && pyodide) {
 						try {
@@ -119,28 +127,97 @@
 						}
 					}
 					break;
-
 				case 'python3':
 					if (!pyodide) {
 						writeToTerminal(terminal, 'Python not ready');
 						break;
 					}
 					try {
-						if (args[0]) {
+						if (args.length > 0) {
 							await executeAndPrompt(args[0]);
 						} else {
-							const result = await runPythonCode(pyodide, command);
-							if (result) writeToTerminal(terminal, result.toString());
+							// Set REPL mode flag
+							(handleCommand as any).inPythonRepl = true;
+
+							const console = await pyodide.runPythonAsync(`
+                            from pyodide.console import PyodideConsole
+                            import __main__
+                            
+                            console = PyodideConsole(__main__.__dict__)
+                            console
+                        `);
+
+							// Set up output callbacks
+							console.stdout_callback = (text: string) =>
+								writeToTerminal(terminal, text);
+							console.stderr_callback = (text: string) =>
+								writeToTerminal(terminal, text);
+
+							writeToTerminal(
+								terminal,
+								'Python 3.11 (Pyodide)\nType "exit()" to exit the REPL\n'
+							);
+
+							let inputBuffer = '';
+							let inputHandler: ((data: string) => void) | null = null;
+
+							const getLine = () =>
+								new Promise<string>((resolve) => {
+									inputBuffer = '';
+									inputHandler = (data: string) => {
+										for (const char of data) {
+											if (char === '\r' || char === '\n') {
+												terminal.write('\r\n');
+												const line = inputBuffer;
+												inputBuffer = '';
+												resolve(line);
+												return;
+											} else if (char === '\b' || char === '\x7f') {
+												if (inputBuffer.length > 0) {
+													inputBuffer = inputBuffer.slice(0, -1);
+												}
+											} else {
+												inputBuffer += char;
+											}
+										}
+									};
+								});
+
+							terminal.onData((data) => {
+								inputHandler?.(data);
+							});
+
+							while (true) {
+								writeToTerminal(terminal, '>>> ', false);
+								const input = await getLine();
+
+								if (input === 'exit()') {
+									writeToTerminal(terminal, 'Exiting Python REPL\n');
+									// Reset REPL mode flag
+									(handleCommand as any).inPythonRepl = false;
+									break;
+								}
+
+								if (input.trim()) {
+									// Only process non-empty input
+									try {
+										await console.push(input);
+									} catch (error) {
+										writeToTerminal(terminal, `${error}\n`);
+									}
+								}
+							}
+							inputHandler = null;
 						}
 					} catch (error) {
 						writeToTerminal(terminal, `Error: ${error}`);
+						// Reset REPL mode flag on error
+						(handleCommand as any).inPythonRepl = false;
 					}
 					break;
-
 				case 'help':
 					writeToTerminal(terminal, 'Commands: clear, ls, cat, python3');
 					break;
-
 				default:
 					if (command) {
 						writeToTerminal(terminal, `Unknown command: ${command}`);
@@ -149,25 +226,44 @@
 		} catch (error) {
 			writeToTerminal(terminal, `Error: ${error}`);
 		} finally {
-			writeToTerminal(terminal, '\r\n$ ', false);
+			if (!(handleCommand as any).inPythonRepl) {
+				writeToTerminal(terminal, '\r\n$ ', false);
+			}
 		}
 	}
 
-	// Repository setup
 	async function fetchRepo() {
 		if (!browser || !terminal || !pyodide) return;
 
 		try {
-			// Initialize Python environment
 			await setupEnvironment(pyodide);
+			writeToTerminal(terminal, 'Loading repository files...');
 
 			const response = await fetch(
 				'https://api.github.com/repos/mayerstrk/python-calculator-interview-task/git/trees/main?recursive=1'
 			);
 			const data = await response.json();
 
-			writeToTerminal(terminal, 'Loading repository files...');
+			const directories = new Set();
+			data.tree.forEach((item) => {
+				if (item.path.includes('/')) {
+					const dir = item.path.split('/')[0];
+					directories.add(dir);
+				}
+			});
 
+			// Create each directory
+			for (const dir of directories) {
+				await runPythonCode(
+					pyodide,
+					`
+                import os
+                os.makedirs('${dir}', exist_ok=True)
+            `
+				);
+			}
+
+			// Then write files
 			for (const item of data.tree) {
 				if (item.type === 'blob') {
 					const contentResponse = await fetch(
@@ -182,18 +278,6 @@
 					await writeFile(pyodide, item.path, content);
 				}
 			}
-
-			await runPythonCode(
-				pyodide,
-				`
-				import os
-				for root, dirs, files in os.walk('.'):
-					for file in files:
-						if file.endswith('.py'):
-							with open(os.path.join(root, file), 'r') as f:
-								f.read()
-			`
-			);
 
 			fileTree = await scanDirectory(pyodide);
 			writeToTerminal(terminal, 'Repository loaded successfully.');
@@ -248,156 +332,133 @@
 	}
 </script>
 
-<div class="flex h-full flex-col">
-	<div class="flex flex-1">
-		<!-- File Explorer -->
-		<div class="w-64 overflow-y-auto border-r bg-gray-100 p-4">
-			<h2 class="mb-4 text-lg font-bold">Files</h2>
-			{#if fileTree}
-				<ul class="space-y-2">
-					{#each fileTree.children as node}
-						{@const isDirectory = node.type === 'directory'}
-						<li>
-							{#if isDirectory}
-								<div class="font-bold text-gray-600">📁 {node.name}/</div>
-								<ul class="ml-4 space-y-1">
-									{#each node.children as childNode}
-										{@const isChildDirectory = childNode.type === 'directory'}
-										<li>
-											{#if isChildDirectory}
-												<div class="font-bold text-gray-600">
-													📁 {childNode.name}/
-												</div>
-												<ul class="ml-4 space-y-1">
-													{#each childNode.children as grandChild}
-														<li>
-															<button
-																onclick={async () => {
-																	selectedFile = grandChild.path;
-																	if (!pyodide) {
-																		if (!terminal) {
-																			console.error(
-																				'Tried to use xterm terminal but found null or undefined'
-																			);
-																			return;
-																		}
-																		writeToTerminal(
-																			terminal,
-																			'Failed to find pyodide'
-																		);
-																		return;
-																	}
-																	fileContent = await readFile(
-																		pyodide,
-																		grandChild.path
-																	);
-																}}
-																class="flex w-full items-center space-x-2 py-1 text-left hover:text-blue-600"
-															>
-																📄 {grandChild.name}
-															</button>
-														</li>
-													{/each}
-												</ul>
-											{:else}
-												<button
-													onclick={async () => {
-														selectedFile = childNode.path;
-														if (!pyodide) {
-															if (!terminal) {
-																console.error(
-																	'Tried to use xterm terminal but found null or undefined'
+<div class="flex h-full flex-col text-xs md:flex-row">
+	<!-- File Explorer -->
+	<div
+		class="h-1/6 w-full overflow-y-auto border-r bg-gray-50/80 p-4 md:h-full md:w-1/6"
+	>
+		<h2 class="mb-4 font-semibold">Files</h2>
+		{#if fileTree}
+			<ul class="space-y-2">
+				{#each fileTree.children as node}
+					{@const isDirectory = node.type === 'directory'}
+					<li>
+						{#if isDirectory}
+							<div class="font-medium text-gray-600">📁 {node.name}/</div>
+							<ul class="ml-4 mt-2">
+								{#each node.children as childNode}
+									{@const isChildDirectory = childNode.type === 'directory'}
+									<li class="mt-2">
+										{#if isChildDirectory}
+											<div class="font-medium text-gray-600">
+												📁 {childNode.name}/
+											</div>
+											<ul class="ml-4 mt-2">
+												{#each childNode.children as grandChild}
+													<li class="mt-2">
+														<button
+															onclick={async () => {
+																selectedFile = grandChild.path;
+																if (!pyodide || !terminal) {
+																	terminal?.writeln('Failed to find pyodide');
+																	return;
+																}
+																fileContent = await readFile(
+																	pyodide,
+																	grandChild.path
 																);
-																return;
-															}
-															writeToTerminal(
-																terminal,
-																'Failed to find pyodide'
-															);
-															return;
-														}
-														fileContent = await readFile(
-															pyodide,
-															childNode.path
-														);
-													}}
-													class="flex w-full items-center space-x-2 py-1 text-left hover:text-blue-600"
-												>
-													📄 {childNode.name}
-												</button>
-											{/if}
-										</li>
-									{/each}
-								</ul>
-							{:else}
-								<button
-									onclick={async () => {
-										selectedFile = node.path;
-										if (!pyodide) {
-											if (!terminal) {
-												console.error(
-													'Tried to use xterm terminal but found null or undefined'
-												);
-												return;
-											}
-											writeToTerminal(terminal, 'Failed to find pyodide');
-											return;
-										}
-										fileContent = await readFile(pyodide, node.path);
-									}}
-									class="flex w-full items-center space-x-2 py-1 text-left hover:text-blue-600"
-								>
-									📄 {node.name}
-								</button>
-							{/if}
-						</li>
-					{/each}
-				</ul>
-			{:else}
-				<div>Loading...</div>
-			{/if}
-		</div>
+															}}
+															class="w-full text-left hover:text-blue-600"
+														>
+															📄 {grandChild.name}
+														</button>
+													</li>
+												{/each}
+											</ul>
+										{:else}
+											<button
+												onclick={async () => {
+													selectedFile = childNode.path;
+													if (!pyodide || !terminal) {
+														terminal?.writeln('Failed to find pyodide');
+														return;
+													}
+													fileContent = await readFile(pyodide, childNode.path);
+												}}
+												class="w-full text-left hover:text-blue-600"
+											>
+												📄 {childNode.name}
+											</button>
+										{/if}
+									</li>
+								{/each}
+							</ul>
+						{:else}
+							<button
+								onclick={async () => {
+									selectedFile = node.path;
+									if (!pyodide || !terminal) {
+										terminal?.writeln('Failed to find pyodide');
+										return;
+									}
+									fileContent = await readFile(pyodide, node.path);
+								}}
+								class="w-full text-left hover:text-blue-600"
+							>
+								📄 {node.name}
+							</button>
+						{/if}
+					</li>
+				{/each}
+			</ul>
+		{:else}
+			<div>Loading...</div>
+		{/if}
+	</div>
 
-		<!-- Content and Terminal -->
-		<div class="flex flex-1 flex-col">
-			<div class="flex-1 overflow-y-auto bg-white p-4">
+	<!-- Content and Terminal -->
+	<div class="flex flex-1 flex-col overflow-hidden">
+		<div class="flex flex-1 flex-col overflow-hidden bg-white/80 p-4 md:h-1/2">
+			<h2 class="font-semibold">{selectedFile || 'No file selected'}</h2>
+			<div class="mt-4 flex-1 overflow-y-auto">
 				{#if selectedFile}
-					<h2 class="mb-4 text-lg font-bold">{selectedFile}</h2>
 					<textarea
 						bind:value={fileContent}
-						class="h-64 w-full rounded bg-gray-50 p-2 font-mono text-sm"
+						class="h-full w-full rounded border font-mono"
 					></textarea>
-					<div class="mt-2 flex space-x-4">
-						<button
-							onclick={async () => {
-								if (selectedFile && pyodide && terminal) {
-									await writeFile(pyodide, selectedFile, fileContent);
-									writeToTerminal(terminal, `Wrote to ${selectedFile}`);
-									writeToTerminal(terminal, '$ ', false);
-									fileTree = await scanDirectory(pyodide);
-								}
-							}}
-							class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-						>
-							Save
-						</button>
-						<button
-							onclick={async () => {
-								if (selectedFile && pyodide) {
-									await writeFile(pyodide, selectedFile, fileContent);
-									await executeAndPrompt(selectedFile);
-								}
-							}}
-							class="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
-						>
-							Run
-						</button>
-					</div>
-				{:else}
-					<h2 class="mb-4 text-lg font-bold">No file selected</h2>
 				{/if}
 			</div>
-			<div class="relative h-80 bg-black" use:initTerminalHandler></div>
+		</div>
+		<div class="h-1/2">
+			<div class="flex w-full items-center gap-2 bg-white/80 p-2">
+				<button
+					onclick={async () => {
+						if (selectedFile && pyodide && terminal) {
+							await writeFile(pyodide, selectedFile, fileContent);
+							writeToTerminal(terminal, `Wrote to ${selectedFile}`);
+							writeToTerminal(terminal, '$ ', false);
+							fileTree = await scanDirectory(pyodide);
+						}
+					}}
+					class="rounded px-4 py-2 text-accent-3 shadow-lg hover:bg-accent-4 hover:text-white"
+					disabled={!selectedFile}
+				>
+					Save
+				</button>
+				<button
+					onclick={async () => {
+						if (selectedFile && pyodide) {
+							await writeFile(pyodide, selectedFile, fileContent);
+							await executeAndPrompt(selectedFile);
+						}
+					}}
+					class="rounded px-4 py-2 text-accent-3 shadow-lg hover:bg-accent-4 hover:text-white"
+					disabled={!selectedFile}
+				>
+					Run
+				</button>
+			</div>
+			<div class=" bg-black" use:initTerminalHandler></div>
 		</div>
 	</div>
 </div>
