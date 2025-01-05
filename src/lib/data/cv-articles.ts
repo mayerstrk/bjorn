@@ -14,12 +14,7 @@ export default [
 		place: 'WeBeet.io',
 		timeRange: 'March 2024 – Present',
 		description: `
-    Architected and implemented CI/CD pipelines leveraging Jenkins, GitHub Actions, Kubernetes, Docker, 
-    and AWS to dramatically enhance deployment efficiency. Developed automated testing frameworks 
-    using Jest and Cypress and trained the team in Test-Driven Development practices to improve 
-    code reliability and maintainability. Provided technical leadership and support, particularly 
-    in backend domains such as authentication, system integration, and security, fostering a collaborative 
-    and high-performing development environment.
+Led architecture decisions for new features and systems at startups, focusing on clear requirements. Handled backend tasks for security, authentication, and integration. Mentored team members through code reviews, direct support, and a test-driven approach. Set up and maintained CI/CD pipelines and testing using GitHub Actions, Kubernetes, Docker, Terraform, Jest, and Cypress. Defined, planned, and implemented feature architecture, and maintained the infrastructure for continuous integration and deployment.
   `,
 		tags: [
 			Tech.Typescript,

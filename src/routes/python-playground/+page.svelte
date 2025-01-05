@@ -69,7 +69,7 @@
 	}
 
 	// Command handling
-	async function handleCommand(cmd: string) {
+	async function handleCommand(clg: string) {
 		if (!terminal) return;
 
 		// Add a static flag to track if we're in REPL mode
@@ -332,10 +332,10 @@
 	}
 </script>
 
-<div class="flex h-full flex-col text-xs md:flex-row">
+<div class="flex h-full flex-col text-xs lg:flex-row">
 	<!-- File Explorer -->
 	<div
-		class="h-1/6 w-full overflow-y-auto border-r bg-gray-50/80 p-4 md:h-full md:w-1/6"
+		class="h-1/6 w-full overflow-y-auto border-r bg-gray-50/80 p-4 lg:h-full lg:w-1/6"
 	>
 		<h2 class="mb-4 font-semibold">Files</h2>
 		{#if fileTree}
@@ -417,8 +417,8 @@
 	</div>
 
 	<!-- Content and Terminal -->
-	<div class="flex flex-1 flex-col overflow-hidden md:h-full">
-		<div class="flex flex-1 flex-col overflow-hidden bg-white/80 p-4 md:h-1/2">
+	<div class="flex flex-1 flex-col overflow-hidden lg:h-full">
+		<div class="flex flex-1 flex-col overflow-hidden bg-white/80 p-4 lg:h-1/2">
 			<h2 class="font-semibold">{selectedFile || 'No file selected'}</h2>
 			<div class="mt-4 flex-1 overflow-y-auto">
 				{#if selectedFile}
@@ -458,7 +458,7 @@
 					Run
 				</button>
 			</div>
-			<div class="bg-black md:h-full" use:initTerminalHandler></div>
+			<div class="bg-black lg:h-full" use:initTerminalHandler></div>
 		</div>
 	</div>
 </div>

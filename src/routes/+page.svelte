@@ -12,7 +12,7 @@
 </svelte:head>
 
 <div
-	class="scrollbar-hidden flex h-full w-full flex-col md:flex-row md:overflow-y-auto"
+	class="scrollbar-hidden flex h-full w-full flex-col lg:flex-row lg:overflow-y-auto"
 >
 	<HomeSideBar />
 	<Main />

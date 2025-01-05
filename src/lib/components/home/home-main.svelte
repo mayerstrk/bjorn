@@ -4,15 +4,15 @@
 </script>
 
 <main
-	class="scrollbar-hidden relative flex min-h-0 w-full flex-col gap-2 p-2 md:w-1/2 md:flex-1 md:grow md:p-4"
+	class="scrollbar-hidden relative flex min-h-0 w-full flex-col gap-2 p-2 lg:w-1/2 lg:flex-1 lg:grow lg:p-4"
 >
 	<nav
-		class="sticky top-0 z-10 box-border flex w-full max-w-screen-2xl p-2 px-5 backdrop-blur md:static"
+		class="sticky top-0 z-10 box-border flex w-full max-w-screen-2xl p-2 px-5 backdrop-blur lg:static"
 	>
 		<ul class="flex w-full gap-2 text-sm italic text-accent-1">
-			<li class="font-medium md:font-normal">
+			<li class="font-medium lg:font-normal">
 				<a
-					href="/mayer-starkman-flores-resume-one-page.pdf"
+					href="/mayer-starkman-resume-2025.pdf"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="group flex"

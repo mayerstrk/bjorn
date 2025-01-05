@@ -95,7 +95,7 @@
 			aria-label="Mayer Starkman's Github profile"
 			target="_blank"
 			rel="noopener noreferrer"
-			class="group group flex size-9 items-center rounded-md bg-transparent transition-all duration-500 hover:bg-stone-800 md:size-11"
+			class="group group flex size-9 items-center rounded-md bg-transparent transition-all duration-500 hover:bg-stone-800 lg:size-11"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@
 			aria-label="Theme button"
 			aria-roledescription="Switch between dark and light theme"
 			type="button"
-			class="group size-11 rounded-full bg-accent-3 transition-all hover:scale-110 active:opacity-50 md:size-11"
+			class="group size-11 rounded-full bg-accent-3 transition-all hover:scale-110 active:opacity-50 lg:size-11"
 			onclick={toggleTheme}
 		>
 			{#if theme === Theme.Dark}
@@ -158,7 +158,7 @@
 			aria-label="Menu button"
 			aria-roledescription="Toggle menu"
 			type="button"
-			class="size-9 rounded-md md:size-11"
+			class="size-9 rounded-md lg:size-11"
 			onclick={(e) => {
 				e.stopPropagation();
 				toggleisMobileNavModalOpen();

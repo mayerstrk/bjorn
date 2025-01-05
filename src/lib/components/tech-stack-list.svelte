@@ -4,7 +4,7 @@
 </script>
 
 <div
-	class="relative my-10 flex w-full flex-col gap-2 overflow-x-clip rounded-lg p-4 py-12 md:mt-auto md:py-2"
+	class="relative my-10 flex w-full flex-col gap-2 overflow-x-clip rounded-lg p-4 py-12 lg:mt-auto lg:py-2"
 	id="{parentComponentName}-tech-stack"
 >
 	<ul class="tech-grid">
@@ -13,7 +13,7 @@
 				id="{parentComponentName}-tech-stack-env-list-{tech.name}"
 				class="tooltip m-auto p-1"
 			>
-				<tech.component sizeClass="size-6 md:size-5" />
+				<tech.component sizeClass="size-6 lg:size-5" />
 				<span class="tooltiptext">{tech.name}</span>
 			</li>
 		{/each}
@@ -24,7 +24,7 @@
 				id="{parentComponentName}-tech-stack-web-list-{tech.name}"
 				class="tooltip m-auto p-1"
 			>
-				<tech.component sizeClass="size-6 md:size-5" />
+				<tech.component sizeClass="size-6 lg:size-5" />
 				<span class="tooltiptext">{tech.name}</span>
 			</li>
 		{/each}

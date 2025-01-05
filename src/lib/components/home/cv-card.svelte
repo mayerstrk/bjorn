@@ -6,13 +6,13 @@
 </script>
 
 <div
-	class=" group relative flex flex-col gap-4 rounded-lg p-6 hover:bg-content-1/5"
+	class=" group relative flex flex-col gap-4 rounded-lg p-6 transition-all duration-700 lg:hover:bg-bkg-2/15"
 >
 	<div class=" flex flex-col">
 		<div class="flex items-center justify-between">
 			<span class="text-sm text-content-2">{timeRange}</span>
 		</div>
-		<h3 class="text-lg group-hover:text-accent-1">
+		<h3 class="mdgroup-hover:text-accent-1 text-lg">
 			{role}
 		</h3>
 		<p class="text-xs group-hover:text-accent-1">

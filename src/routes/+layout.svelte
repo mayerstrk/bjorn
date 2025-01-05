@@ -9,12 +9,12 @@
 >
 	<div
 		id="root-layout__slot-wrapper"
-		class="scrollbar-hidden relative flex w-full flex-col md:h-full md:min-h-0 md:flex-1 md:grow"
+		class="scrollbar-hidden relative flex w-full flex-col lg:h-full lg:min-h-0 lg:flex-1 lg:grow"
 	>
 		<slot />
 	</div>
-	<footer class="relative flex w-full flex-col text-xs md:mt-0">
-		<p class="mx-auto pb-3 text-xs opacity-50 md:mx-0 md:px-6">
+	<footer class="relative flex w-full flex-col text-xs lg:mt-0">
+		<p class="mx-auto pb-3 text-xs opacity-50 lg:mx-0 lg:px-6">
 			&copy; 2024 Mayer Starkman. All rights reserved.
 		</p>
 	</footer>
