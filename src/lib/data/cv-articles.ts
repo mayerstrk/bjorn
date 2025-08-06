@@ -10,12 +10,52 @@ export type CvArticleData = {
 
 export default [
 	{
+		role: 'Chief Technology Officer',
+		place: 'WeBeet.io',
+		timeRange: 'June 2025 – Present',
+		description: `Driving technology vision and strategy across R&D, focusing on scaling a high-performance engineering culture. Led the shift to a DevSecOps culture, built a cloud-native AWS cyber range, and initiated the company's R&D into AI with RAG workflows. Scaled the engineering organization by establishing DevOps and QA departments and evolved the data practice to a full data science function.`,
+		tags: [
+			Tech.Terraform,
+			Tech.Ansible,
+			Tech.AWS,
+			Tech.Kafka,
+			Tech.Redis,
+			Tech.Python,
+			Tech.Go,
+			Tech.NodeJS,
+			Tech.Docker,
+			Tech.Kubernetes,
+			Tech.GitHubActions,
+			Tech.Fastify,
+			Tech.Typescript,
+			Tech.AI,
+			Tech.LangChain,
+			Tech.RAG
+		]
+	},
+	{
+		role: 'Head of Engineering',
+		place: 'WeBeet.io',
+		timeRange: 'January 2025 – June 2025',
+		description: `Led the expansion of the engineering team, making key architectural decisions to ensure secure, stable, and scalable systems. Oversaw backend development, fostered a culture of excellence through mentorship and TDD, and enhanced DevOps practices. Guided product and front-end strategy to improve user experience and led the adoption of modern technologies like Go microservices and ML infrastructure.`,
+		tags: [
+			Tech.Go,
+			Tech.NodeJS,
+			Tech.SSR,
+			Tech.GitHubActions,
+			Tech.Kubernetes,
+			Tech.Docker,
+			Tech.Terraform,
+			Tech.Jest,
+			Tech.Cypress,
+			Tech.SQL
+		]
+	},
+	{
 		role: 'Tech Lead (Backend)',
 		place: 'WeBeet.io',
-		timeRange: 'March 2024 – Present',
-		description: `
-Led architecture decisions for new features and systems at startups, focusing on clear requirements. Handled backend tasks for security, authentication, and integration. Mentored team members through code reviews, direct support, and a test-driven approach. Set up and maintained CI/CD pipelines and testing using GitHub Actions, Kubernetes, Docker, Terraform, Jest, and Cypress. Defined, planned, and implemented feature architecture, and maintained the infrastructure for continuous integration and deployment.
-  `,
+		timeRange: 'March 2024 – January 2025',
+		description: `Led architecture decisions for new features, handled backend tasks, and mentored team members. Established and maintained CI/CD pipelines and testing infrastructure, and played a key role in feature architecture and implementation.`,
 		tags: [
 			Tech.Typescript,
 			Tech.NodeJS,

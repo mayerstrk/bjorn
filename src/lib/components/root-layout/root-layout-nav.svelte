@@ -95,7 +95,7 @@
 			aria-label="Mayer Starkman's Github profile"
 			target="_blank"
 			rel="noopener noreferrer"
-			class="group group flex size-9 items-center rounded-md bg-transparent transition-all duration-500 hover:bg-stone-800 lg:size-11"
+			class="group flex size-9 items-center rounded-md bg-transparent transition-all duration-500 hover:bg-stone-800 lg:size-11"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
